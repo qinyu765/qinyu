@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
