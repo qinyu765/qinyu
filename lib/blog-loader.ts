@@ -1,6 +1,9 @@
 import { BlogPost, PostFrontmatter } from '../types';
 
-// Simple frontmatter parser (YAML-like)
+/**
+ * 简易 frontmatter 解析器（仅支持单层 key: value，不支持嵌套/数组）
+ * 用正则匹配 `---` 分隔的头部区域，逐行按首个冒号拆分键值对
+ */
 function parseFrontmatter(content: string): { data: PostFrontmatter; content: string } | null {
   const match = content.match(/^---\n([\s\S]+?)\n---\n([\s\S]*)$/);
   if (!match) return null;
@@ -8,7 +11,6 @@ function parseFrontmatter(content: string): { data: PostFrontmatter; content: st
   const frontmatterText = match[1];
   const markdownContent = match[2].trim();
 
-  // Parse simple key-value pairs
   const data: Partial<PostFrontmatter> = {};
   const lines = frontmatterText.split('\n');
 
@@ -19,7 +21,7 @@ function parseFrontmatter(content: string): { data: PostFrontmatter; content: st
     const key = line.slice(0, colonIndex).trim();
     let value = line.slice(colonIndex + 1).trim();
 
-    // Remove quotes if present
+    // 去除首尾引号
     if (value.startsWith('"') && value.endsWith('"')) {
       value = value.slice(1, -1);
     } else if (value.startsWith("'") && value.endsWith("'")) {
@@ -29,7 +31,6 @@ function parseFrontmatter(content: string): { data: PostFrontmatter; content: st
     (data as any)[key] = value;
   }
 
-  // Validate required fields
   if (!data.title || !data.date || !data.category || !data.excerpt) {
     console.error('Missing required frontmatter fields', data);
     return null;
@@ -38,7 +39,7 @@ function parseFrontmatter(content: string): { data: PostFrontmatter; content: st
   return { data: data as PostFrontmatter, content: markdownContent };
 }
 
-// Load all markdown files from content/posts
+// 构建时一次性加载 content/posts/ 下所有 .md 文件（eager: 同步、?raw: 原始字符串）
 const postModules = import.meta.glob('../content/posts/*.md', {
   eager: true,
   query: '?raw',
@@ -59,7 +60,7 @@ function loadBlogPosts(): BlogPost[] {
 
     const { data, content: markdown } = parsed;
 
-    // Extract id from filename (remove path and .md extension)
+    // 从文件路径提取 id 作为 URL slug
     const id = path.replace('../content/posts/', '').replace('.md', '');
 
     posts.push({
@@ -73,7 +74,7 @@ function loadBlogPosts(): BlogPost[] {
     });
   }
 
-  // Sort by date (newest first)
+  // 按日期降序（最新在前）
   posts.sort((a, b) => b.date.localeCompare(a.date));
 
   return posts;

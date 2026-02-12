@@ -4,23 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Qinyu Blog</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'%3E%3Cg transform='skewX(-12)' transform-origin='32 32'%3E%3Cpath d='M20 20 L28 20 L32 44 L26 44 Z' fill='%23F0F0F0'/%3E%3Cpath d='M44 20 L36 20 L34 36 L40 36 Z' fill='%231269CC'/%3E%3Ccircle cx='32' cy='50' r='2.5' fill='%231269CC'/%3E%3Cline x1='26' y1='44' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3Cline x1='34' y1='36' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700;900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              p3blue: '#0055FF',
-              p3dark: '#0a0a1a',
-              p3cyan: '#00FFFF',
+              p3blue: '#1269CC',
+              p3dark: '#0D1B2A',
+              p3cyan: '#51EEFC',
+              p3mid: '#6D9AC7',
               p3white: '#F0F0F0',
             },
             fontFamily: {
-              display: ['Anton', 'sans-serif'],
-              body: ['Roboto Condensed', 'sans-serif'],
+              display: ['Anton', 'Noto Sans SC', 'sans-serif'],
+              body: ['Roboto Condensed', 'Noto Sans SC', 'sans-serif'],
             },
             animation: {
               'float': 'float 6s ease-in-out infinite',
@@ -47,17 +49,17 @@
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #0a0a1a; 
+        background: #0D1B2A;
       }
       ::-webkit-scrollbar-thumb {
-        background: #0055FF; 
-        border-radius: 4px;
+        background: #1269CC;
+        border-radius: 0;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #00FFFF; 
+        background: #51EEFC;
       }
       body {
-        background-color: #0a0a1a;
+        background-color: #0D1B2A;
         color: white;
         overflow-x: hidden;
       }

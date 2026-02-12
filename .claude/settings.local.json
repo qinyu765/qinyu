@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "mcp__auggie-mcp__codebase-retrieval",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "WebFetch(domain:www.color-hex.com)",
+      "WebFetch(domain:www.mariellepalatino.com)",
+      "WebSearch",
+      "WebFetch(domain:automaton-media.com)",
+      "WebFetch(domain:personacentral.com)",
+      "WebFetch(domain:gamerant.com)"
     ]
   }
 }

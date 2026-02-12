@@ -7,38 +7,38 @@ interface SkewButtonProps {
   isActive?: boolean;
 }
 
+/** P3R 标志性斜切按钮：容器 -skew-x-12，内部文字 skew-x-12 反向抵消 */
 export const SkewButton: React.FC<SkewButtonProps> = ({ to, children, isActive }) => {
   const location = useLocation();
-  // If isActive is not explicitly passed, check the path
   const active = isActive !== undefined ? isActive : location.pathname === to;
 
   return (
     <Link to={to} className="relative group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark">
-      {/* Background shape */}
-      <div 
+      {/* 斜切背景层 */}
+      <div
         className={`
           absolute inset-0 transform -skew-x-12 transition-all duration-300
-          border-2 border-white
-          ${active ? 'bg-white' : 'bg-transparent hover:bg-p3blue/50'}
+          border
+          ${active ? 'bg-white border-white' : 'bg-transparent border-white/40 hover:bg-p3blue/50'}
         `}
       />
-      
-      {/* Text Container (Counter-skewed to keep text straight) */}
-      <div className="relative px-8 py-3">
-        <span 
+
+      {/* 文字层（反向斜切保持水平） */}
+      <div className="relative px-5 py-1.5">
+        <span
           className={`
-            font-display text-xl tracking-wider transform skew-x-12 block
+            font-display text-base tracking-wider transform skew-x-12 block
             transition-colors duration-300
-            ${active ? 'text-p3dark font-bold' : 'text-white group-hover:text-cyan-300'}
+            ${active ? 'text-p3dark font-bold' : 'text-white group-hover:text-p3cyan'}
           `}
         >
           {children}
         </span>
       </div>
 
-      {/* Decorative dots */}
+      {/* 激活态装饰菱形点 */}
       {active && (
-        <div className="absolute top-1/2 -left-4 w-2 h-2 bg-p3cyan rounded-full animate-pulse" />
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-2 h-2 bg-p3cyan rotate-45 animate-pulse" />
       )}
     </Link>
   );

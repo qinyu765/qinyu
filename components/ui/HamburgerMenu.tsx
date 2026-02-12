@@ -17,10 +17,10 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
 
   return (
     <>
-      {/* Backdrop Overlay */}
+      {/* 半透明遮罩层（点击关闭菜单） */}
       <div
         className={`
-          fixed inset-0 bg-black/60 backdrop-blur-sm
+          fixed inset-0 bg-p3dark/60 backdrop-blur-sm
           transition-opacity duration-300
           z-[54]
           ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
@@ -29,7 +29,7 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
         aria-hidden="true"
       />
 
-      {/* Sliding Menu Panel */}
+      {/* 右侧滑入菜单面板 */}
       <div
         className={`
           fixed top-0 right-0 h-screen w-80 max-w-[85vw]
@@ -43,10 +43,10 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
         aria-label="Main navigation"
         aria-hidden={!isOpen}
       >
-        {/* Decorative Top Bar */}
+        {/* 顶部装饰斜切条 */}
         <div className="absolute top-0 left-0 right-0 h-16 transform -skew-x-12 bg-p3blue/20 border-b-2 border-p3cyan/50" />
 
-        {/* Nav Items Container */}
+        {/* 导航项列表 */}
         <div className="pt-20 px-6 space-y-4">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -62,29 +62,29 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                   ${isActive ? 'bg-white border-p3blue' : 'bg-transparent border-white hover:bg-p3blue/50'}
                 `}
               >
-                {/* Text Container (Counter-skewed) */}
+                {/* 文字层（反向斜切保持水平） */}
                 <div className="relative px-12 py-5 transform skew-x-12">
                   <span
                     className={`
                       font-display text-2xl tracking-wider block
                       transition-colors duration-300
-                      ${isActive ? 'text-p3dark font-bold' : 'text-white group-hover:text-cyan-300'}
+                      ${isActive ? 'text-p3dark font-bold' : 'text-white group-hover:text-p3cyan'}
                     `}
                   >
                     {item.label}
                   </span>
                 </div>
 
-                {/* Active Indicator */}
+                {/* 激活态指示菱形 */}
                 {isActive && (
-                  <div className="absolute top-1/2 -left-4 w-2 h-2 bg-p3cyan rounded-full animate-pulse" />
+                  <div className="absolute top-1/2 -translate-y-1/2 -left-4 w-2 h-2 bg-p3cyan rotate-45 animate-pulse" />
                 )}
               </Link>
             );
           })}
         </div>
 
-        {/* Decorative Bottom Element */}
+        {/* 底部装饰渐变线 */}
         <div className="absolute bottom-8 left-6 right-6">
           <div className="h-1 bg-gradient-to-r from-p3blue via-p3cyan to-p3blue opacity-50" />
         </div>
@@ -107,12 +107,11 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
       aria-expanded={isOpen}
       aria-controls="mobile-menu"
     >
-      {/* Skewed Background */}
-      <div className="absolute inset-0 transform -skew-x-12 bg-white border-2 border-p3blue shadow-[3px_3px_0px_#0055FF]" />
+      {/* 斜切背景 */}
+      <div className="absolute inset-0 transform -skew-x-12 bg-p3white border-2 border-p3blue shadow-[3px_3px_0px_rgba(18,105,204,0.5)]" />
 
-      {/* Icon Container (Counter-skewed) */}
+      {/* 三横线图标（开/关态通过 transform 变形为 X） */}
       <div className="relative z-10 transform skew-x-12 p-3">
-        {/* Top Line */}
         <span
           className={`
             block w-6 h-0.5 bg-p3dark
@@ -121,7 +120,6 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
             ${isOpen ? 'rotate-45 translate-y-2' : 'rotate-0 translate-y-0'}
           `}
         />
-        {/* Middle Line */}
         <span
           className={`
             block w-6 h-0.5 bg-p3dark mt-1.5
@@ -130,7 +128,6 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
             ${isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}
           `}
         />
-        {/* Bottom Line */}
         <span
           className={`
             block w-6 h-0.5 bg-p3dark mt-1.5
