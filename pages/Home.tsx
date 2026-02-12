@@ -4,6 +4,17 @@ import { BLOG_POSTS } from '../constants';
 import { ArrowRight, Star } from 'lucide-react';
 
 export const Home: React.FC = () => {
+  if (!BLOG_POSTS.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] animate-in fade-in duration-700">
+        <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">
+          PERSONA<br/>BLOG
+        </h1>
+        <p className="mt-8 text-xl text-p3cyan font-light tracking-widest">No records found in the archive.</p>
+      </div>
+    );
+  }
+
   const latestPost = BLOG_POSTS[0];
   const otherPosts = BLOG_POSTS.slice(1);
 
@@ -16,7 +27,7 @@ export const Home: React.FC = () => {
           
           {/* Typography Graphic */}
           <div className="space-y-4 z-10">
-            <h1 className="text-7xl md:text-9xl font-display font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
               PERSONA<br/>BLOG
             </h1>
             <p className="text-xl md:text-2xl text-p3cyan font-light tracking-widest border-l-4 border-p3blue pl-4 bg-black/40 py-2 backdrop-blur-sm max-w-md">

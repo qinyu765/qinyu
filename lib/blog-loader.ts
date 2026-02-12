@@ -74,11 +74,7 @@ function loadBlogPosts(): BlogPost[] {
   }
 
   // Sort by date (newest first)
-  posts.sort((a, b) => {
-    const dateA = a.date.split('.').reverse().join('');
-    const dateB = b.date.split('.').reverse().join('');
-    return dateB.localeCompare(dateA);
-  });
+  posts.sort((a, b) => b.date.localeCompare(a.date));
 
   return posts;
 }

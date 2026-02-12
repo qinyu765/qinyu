@@ -1,85 +1,95 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+此文件为 Claude Code (claude.ai/code) 在本仓库工作时提供指导。
 
-## Development Commands
+## 开发命令
 
-- `pnpm install` - Install dependencies
-- `pnpm dev` - Start development server on port 3000
-- `pnpm build` - Build for production
-- `pnpm preview` - Preview production build locally
+- `pnpm install` - 安装依赖
+- `pnpm dev` - 启动开发服务器（端口 3000）
+- `pnpm build` - 生产环境构建
+- `pnpm preview` - 本地预览生产构建
 
-## Architecture Overview
+## 架构总览
 
-This is a **Persona 3 Reload-inspired blog** built with React 19, Vite, and TypeScript. The design aesthetic heavily features:
+这是一个**女神异闻录3重置版（Persona 3 Reload）主题博客**，基于 React 19、Vite 和 TypeScript 构建。设计美学的核心特征：
 
-- **Skewed/transformed UI elements** using `transform: skewX(-12deg)` - particularly the navigation buttons and date indicator
-- **High contrast color palette**: Deep Navy Blue (#0055FF), Bright Cyan (#00FFFF), Stark White, Dark (#0a0a1a)
-- **Diegetic UI design** - interface elements styled as in-game system menus
-- **Hash-based routing** via `react-router-dom` (HashRouter) for static deployment compatibility
+- **斜切变形 UI 元素**：使用 `transform: skewX(-12deg)` - 尤其是导航按钮和日期指示器
+- **高对比度配色**：深海军蓝 (#0055FF)、亮青色 (#00FFFF)、纯白、深色 (#0a0a1a)
+- **拟真界面设计（Diegetic UI）** - 界面元素风格化为游戏系统菜单
+- **基于 Hash 的路由**：使用 `react-router-dom` 的 HashRouter 以兼容静态部署（GitHub Pages）
 
-## Key Architectural Decisions
+## 关键架构决策
 
-### Routing
-Uses `HashRouter` instead of `BrowserRouter` for GitHub Pages compatibility. Routes are defined in `App.tsx` with a fallback to `/`.
+### 路由系统
+使用 `HashRouter` 而非 `BrowserRouter`，以兼容 GitHub Pages。路由定义在 `App.tsx`，包含回退至 `/` 的处理。
 
-### Styling
-**No CSS files or Tailwind config** - Tailwind CSS is loaded via CDN in `index.html`, and all custom configuration (colors, fonts, animations) is embedded directly in the HTML's `<script>` tag. The color tokens are:
+### 样式方案
+**无 CSS 文件或 Tailwind 配置文件** - Tailwind CSS 通过 CDN 在 `index.html` 中加载，所有自定义配置（颜色、字体、动画）直接嵌入 HTML 的 `<script>` 标签中。配色 tokens：
 - `p3blue`: #0055FF
 - `p3cyan`: #00FFFF
 - `p3dark`: #0a0a1a
 - `p3white`: #F0F0F0
 
-Fonts are Google Fonts: **Anton** (display) and **Roboto Condensed** (body).
+字体使用 Google Fonts：**Anton**（展示用）和 **Roboto Condensed**（正文）。
 
-### Content Management
-Blog posts are **hardcoded in `constants.ts`** as the `BLOG_POSTS` array. Each post contains:
-- `id`: URL slug
-- `title`, `date`, `category` ('TECH' | 'LIFE' | 'MEMO')
-- `excerpt`: For list view
-- `content`: Markdown string rendered via `react-markdown`
-- `coverImage`: Optional image URL
+### 内容管理
+博客文章以 **Markdown 文件**形式存储在 `content/posts/` 目录，通过 Vite 的 `import.meta.glob` 动态加载到 `constants.ts` 中的 `BLOG_POSTS` 数组。每篇文章包含：
+- `id`：URL slug（由文件名生成）
+- `title`、`date`、`category`（'TECH' | 'LIFE' | 'MEMO'）
+- `excerpt`：列表视图摘要
+- `content`：Markdown 内容字符串，通过 `react-markdown` 渲染
+- `coverImage`：可选封面图 URL
 
-### Component Structure
+### 组件结构
 
-**Layout** (`components/Layout.tsx`): Wraps all routes, contains:
-- Fixed header with skewed date indicator (top-left)
-- Skewed navigation buttons (top-right)
-- Breadcrumb path indicator showing current route
-- Floating footer vitals
+**Layout** (`components/Layout.tsx`)：包裹所有路由，包含：
+- 固定头部，带斜切日期指示器（左上角）
+- 斜切导航按钮（右上角）
+- 面包屑路径指示当前路由
+- 浮动底部状态栏
 
-**Pages** (`pages/`): Home, BlogList, BlogPost, About - all rendered through `<Outlet />` in Layout
+**Pages** (`pages/`)：Home、BlogList、BlogPost、About - 通过 Layout 中的 `<Outlet />` 渲染
 
-**UI Components** (`components/ui/`):
-- `SkewButton`: Navigation link with signature -12deg skew transform
-- `BackgroundEffect`: Fixed background with moon motifs and reflection lines
-- `MarkdownRenderer`: Custom-styled `react-markdown` with P3R-themed components
+**UI 组件** (`components/ui/`)：
+- `SkewButton`：带标志性 -12deg 斜切变换的导航链接
+- `BackgroundEffect`：固定背景，包含月亮图案和反射线
+- `MarkdownRenderer`：自定义样式的 `react-markdown`，带 P3R 主题组件
+- `HamburgerMenu`：移动端响应式菜单
 
-### Module Resolution
-Uses **ESM imports via importmap** in `index.html` pointing to `esm.sh` CDN rather than npm-installed modules. The `@/*` path alias resolves to the project root.
+### 模块解析
+使用 **ESM imports via importmap**（在 `index.html` 中），指向 `esm.sh` CDN，而非 npm 安装的模块。`@/*` 路径别名解析至项目根目录。
 
-## When Modifying This Codebase
+### 项目结构特点
+- **源代码位于项目根目录**（非 `src/` 目录）
+- 主入口：`index.tsx`
+- 类型定义：`types.ts`
+- 博客加载逻辑：`lib/blog-loader.ts`
 
-### Adding Blog Posts
-Create a new Markdown file in `content/posts/` directory. Each post requires YAML frontmatter:
+## 修改代码库时
+
+### 添加博客文章
+在 `content/posts/` 目录创建新的 Markdown 文件。每篇文章需要 YAML frontmatter：
 
 ```markdown
 ---
-title: "Post Title"
+title: "文章标题"
 date: "2024.12.29"
 category: "TECH"
-coverImage: "https://..."  # Optional
-excerpt: "Brief summary for list view"
+coverImage: "https://..."  # 可选
+excerpt: "用于列表视图的简短摘要"
 ---
 
-# Article Title
+# 文章标题
 
-Article content in Markdown...
+Markdown 格式的文章内容...
 ```
 
-The filename becomes the URL slug (e.g., `my-post.md` → `/#/blog/my-post`).
+文件名将成为 URL slug（例如 `my-post.md` → `/#/blog/my-post`）。
 
-### Other Modifications
-- **Styling changes**: Modify Tailwind config in `index.html` or use existing color tokens (p3blue, p3cyan, p3dark, p3white)
-- **Skew transforms**: The signature -12deg skew is applied to containers; text is counter-skewed with `skew-x-12` to remain readable
-- **Markdown rendering**: Customize components in `MarkdownRenderer.tsx` to match the diegetic UI aesthetic
+### 其他修改
+- **样式修改**：在 `index.html` 中修改 Tailwind 配置，或使用现有配色 tokens（p3blue、p3cyan、p3dark、p3white）
+- **斜切变换**：标志性的 -12deg 斜切应用于容器；文本使用 `skew-x-12` 反向斜切以保持可读性
+- **Markdown 渲染**：在 `MarkdownRenderer.tsx` 中自定义组件以匹配拟真 UI 美学
+
+### 部署
+项目配置为通过 GitHub Actions 自动部署至 GitHub Pages。推送至 `main` 分支即可触发自动部署。

@@ -1,6 +1,6 @@
 ---
 title: "WANDERING"
-date: "2025.06.45"
+date: "2025.06.30"
 category: "LIFE"
 coverImage: "https://picsum.photos/800/405"
 excerpt: "Personal reflections on productivity, burnout, and finding balance in the digital age."

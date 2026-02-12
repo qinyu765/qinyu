@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Qinyu Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
@@ -59,6 +61,12 @@
         color: white;
         overflow-x: hidden;
       }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   <script type="importmap">
 {
@@ -68,7 +76,8 @@
     "react/": "https://esm.sh/react@^19.2.3/",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-markdown": "https://esm.sh/react-markdown@^10.1.0"
+    "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
+    "remark-gfm": "https://esm.sh/remark-gfm@^4.0.1"
   }
 }
 </script>

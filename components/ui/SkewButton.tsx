@@ -13,7 +13,7 @@ export const SkewButton: React.FC<SkewButtonProps> = ({ to, children, isActive }
   const active = isActive !== undefined ? isActive : location.pathname === to;
 
   return (
-    <Link to={to} className="relative group block">
+    <Link to={to} className="relative group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark">
       {/* Background shape */}
       <div 
         className={`
@@ -24,7 +24,7 @@ export const SkewButton: React.FC<SkewButtonProps> = ({ to, children, isActive }
       />
       
       {/* Text Container (Counter-skewed to keep text straight) */}
-      <div className="relative px-8 py-3 transform -skew-x-12">
+      <div className="relative px-8 py-3">
         <span 
           className={`
             font-display text-xl tracking-wider transform skew-x-12 block

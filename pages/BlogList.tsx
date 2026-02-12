@@ -12,7 +12,7 @@ export const BlogList: React.FC = () => {
           <Link 
             key={post.id} 
             to={`/blog/${post.id}`}
-            className="group block relative"
+            className="group block relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark"
           >
             <div className="absolute inset-0 bg-p3blue transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
             

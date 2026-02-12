@@ -66,7 +66,7 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                 <div className="relative px-12 py-5 transform skew-x-12">
                   <span
                     className={`
-                      font-display text-2xl tracking-wider transform skew-x-12 block
+                      font-display text-2xl tracking-wider block
                       transition-colors duration-300
                       ${isActive ? 'text-p3dark font-bold' : 'text-white group-hover:text-cyan-300'}
                     `}
@@ -102,7 +102,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
   return (
     <button
       onClick={onToggle}
-      className="relative z-[60] w-12 h-12 flex items-center justify-center pointer-events-auto"
+      className="relative z-[60] w-12 h-12 flex items-center justify-center pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark"
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
       aria-expanded={isOpen}
       aria-controls="mobile-menu"
@@ -116,7 +116,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
         <span
           className={`
             block w-6 h-0.5 bg-p3dark
-            transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
+            transition-[transform] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? 'rotate-45 translate-y-2' : 'rotate-0 translate-y-0'}
           `}
@@ -125,7 +125,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
         <span
           className={`
             block w-6 h-0.5 bg-p3dark mt-1.5
-            transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
+            transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}
           `}
@@ -134,7 +134,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
         <span
           className={`
             block w-6 h-0.5 bg-p3dark mt-1.5
-            transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
+            transition-[transform] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? '-rotate-45 -translate-y-2' : 'rotate-0 translate-y-0'}
           `}

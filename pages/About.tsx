@@ -11,7 +11,7 @@ export const About: React.FC = () => {
            <div className="bg-gradient-to-b from-p3blue to-black p-1 border-2 border-white transform -skew-x-6">
               <div className="aspect-[3/4] bg-gray-800 relative overflow-hidden">
                  {/* Placeholder for user avatar */}
-                 <img src="/images/user_admin.jpg" alt="Avatar" className="w-full h-full object-cover" />
+                 <img src="/images/user_admin.jpg" alt="Avatar" className="w-full h-full object-cover" loading="lazy" />
                  <div className="absolute bottom-0 left-0 right-0 bg-p3cyan/90 text-black p-2 font-display font-bold text-center text-xl">
                     USER_ADMIN
                  </div>
@@ -56,11 +56,18 @@ export const About: React.FC = () => {
                     Technical Skills
                  </h2>
                  <div className="grid grid-cols-2 gap-4">
-                    {['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Three.js', 'Node.js', 'UI/UX Design'].map(skill => (
+                    {([
+                      ['React / Next.js', '90%'],
+                      ['TypeScript', '85%'],
+                      ['Tailwind CSS', '80%'],
+                      ['Three.js', '60%'],
+                      ['Node.js', '75%'],
+                      ['UI/UX Design', '70%'],
+                    ] as const).map(([skill, width]) => (
                        <div key={skill} className="bg-black/40 p-3 border border-white/10 flex items-center justify-between group hover:bg-p3blue/20 transition-colors cursor-default">
                           <span>{skill}</span>
                           <div className="w-12 h-1 bg-gray-700 rounded-full overflow-hidden">
-                             <div className="h-full bg-p3cyan w-[80%]" />
+                             <div className="h-full bg-p3cyan" style={{ width }} />
                           </div>
                        </div>
                     ))}

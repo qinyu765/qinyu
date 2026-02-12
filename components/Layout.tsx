@@ -4,8 +4,8 @@ import { NAV_ITEMS } from '../constants';
 import { SkewButton } from './ui/SkewButton';
 import { BackgroundEffect } from './ui/BackgroundEffect';
 import { HamburgerMenu, HamburgerButton } from './ui/HamburgerMenu';
-import { Outlet, useLocation } from 'react-router-dom';
-import { Menu, Calendar, Battery } from 'lucide-react';
+import { Outlet, useLocation, Link } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 
 export const Layout: React.FC = () => {
   const location = useLocation();
@@ -88,29 +88,31 @@ export const Layout: React.FC = () => {
       />
 
       {/* Main Content Area - Responsive padding-top */}
-      <main className="md:pt-32 pt-24 pb-20 px-4 md:px-12 max-w-7xl mx-auto min-h-screen flex flex-col relative z-10">
+      <main className="md:pt-32 pt-24 pb-20 px-4 sm:px-8 md:px-12 max-w-7xl mx-auto min-h-screen flex flex-col relative z-10">
          {/* Breadcrumb / Path Indicator */}
-         <div className="mb-8 flex items-center space-x-2 text-p3cyan/80 text-sm font-bold uppercase tracking-widest border-b border-p3cyan/30 pb-2 w-fit">
+         <div className="mb-8 flex items-center space-x-2 text-p3cyan text-sm font-bold uppercase tracking-widest border-b border-p3cyan/30 pb-2 w-fit">
             <Menu size={16} />
-            <span>SYSTEM</span>
+            <Link to="/" className="hover:text-white transition-colors">SYSTEM</Link>
             <span>//</span>
-            <span>{location.pathname === '/' ? 'ROOT' : location.pathname.substring(1)}</span>
+            {location.pathname === '/' ? (
+              <span>ROOT</span>
+            ) : (
+              location.pathname.substring(1).split('/').map((segment, i, arr) => {
+                const path = '/' + arr.slice(0, i + 1).join('/');
+                return (
+                  <React.Fragment key={path}>
+                    {i > 0 && <span>/</span>}
+                    <Link to={path} className="hover:text-white transition-colors">{decodeURIComponent(segment).toUpperCase()}</Link>
+                  </React.Fragment>
+                );
+              })
+            )}
          </div>
          
          <Outlet />
       </main>
 
-      {/* Floating Footer Elements */}
-      <div className="fixed bottom-8 left-8 hidden md:flex flex-col space-y-2 text-xs font-mono text-white/50 z-40">
-        <div className="flex items-center space-x-2">
-           <Battery size={16} className="text-p3cyan" />
-           <span>STATUS: WORKING</span>
-        </div>
-        <div>GITHUB_PAGES: DEPLOYED</div>
-        <div>REACT_VER: 18.2.0</div>
-      </div>
-
-      <div className="fixed bottom-0 left-0 w-full h-2 bg-gradient-to-r from-p3blue to-p3cyan" />
+      <div className="fixed bottom-0 left-0 w-full h-2 bg-gradient-to-r from-p3blue to-p3cyan z-40" />
     </div>
   );
 };
