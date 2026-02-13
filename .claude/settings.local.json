@@ -8,7 +8,13 @@
       "WebSearch",
       "WebFetch(domain:automaton-media.com)",
       "WebFetch(domain:personacentral.com)",
-      "WebFetch(domain:gamerant.com)"
+      "WebFetch(domain:gamerant.com)",
+      "WebFetch(domain:juejin.cn)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh api:*)",
+      "Bash(where:*)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
