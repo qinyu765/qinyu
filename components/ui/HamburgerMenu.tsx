@@ -32,7 +32,7 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
       {/* 右侧滑入菜单面板 */}
       <div
         className={`
-          fixed top-0 right-0 h-screen w-80 max-w-[85vw]
+          fixed top-0 right-0 h-screen w-64 max-w-[65vw]
           bg-p3dark/95 backdrop-blur-md
           border-l-2 border-p3cyan
           transform transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
@@ -63,10 +63,10 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
                 `}
               >
                 {/* 文字层（反向斜切保持水平） */}
-                <div className="relative px-12 py-5 transform skew-x-12">
+                <div className="relative px-8 py-3 transform skew-x-12">
                   <span
                     className={`
-                      font-display text-2xl tracking-wider block
+                      font-display text-lg tracking-wider block
                       transition-colors duration-300
                       ${isActive ? 'text-p3dark font-bold' : 'text-white group-hover:text-p3cyan'}
                     `}

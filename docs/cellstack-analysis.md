@@ -258,10 +258,7 @@ tags: ["React", "UI"]         # 新增：需升级解析器支持数组
 **本地开发：** 编辑 `.env` 文件，替换占位符为真实值：
 
 ```
-VITE_GISCUS_REPO=your-username/your-repo
-VITE_GISCUS_REPO_ID=your-repo-id
-VITE_GISCUS_CATEGORY=Announcements
-VITE_GISCUS_CATEGORY_ID=your-category-id
+
 ```
 
 **GitHub Actions 部署：** 在仓库 Settings → Secrets and variables → Actions 中添加：

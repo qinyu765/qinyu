@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { TocItem } from "../lib/toc";
 
 interface MarkdownRendererProps {
   content: string;
+  headings?: TocItem[];
 }
 
-/**
- * Markdown 渲染器：覆写 react-markdown 各元素为 P3R 主题样式
- * h2 带左侧斜切装饰条、blockquote 带蓝色左边框、code block 带 cyan 左边框等
- */
+function getTextContent(node: React.ReactNode): string {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (!node) return '';
+  if (Array.isArray(node)) return node.map(getTextContent).join('');
+  if (typeof node === 'object' && 'props' in node) return getTextContent((node as any).props.children);
+  return '';
+}
+
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
+  headings,
 }) => {
+  const headingTextToId = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const h of headings ?? []) {
+      if (!map.has(h.text)) map.set(h.text, h.id);
+    }
+    return map;
+  }, [headings]);
+
+  const findHeadingId = (children: React.ReactNode) => {
+    const text = getTextContent(children).trim();
+    return headingTextToId.get(text);
+  };
+
   return (
     <div className="markdown-content">
       <ReactMarkdown
@@ -26,15 +47,32 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               {...props}
             />
           ),
-          h2: ({ node, ...props }) => (
-            <div className="flex items-center space-x-4 mt-8 mb-4">
-              <div className="w-2 h-8 bg-p3blue transform -skew-x-12" />
-              <h2
-                className="text-2xl font-bold text-white uppercase tracking-wider"
-                {...props}
-              />
-            </div>
-          ),
+          h2: ({ node, children, ...props }) => {
+            const id = findHeadingId(children);
+            return (
+              <div className="flex items-center space-x-4 mt-8 mb-4">
+                <div className="w-2 h-8 bg-p3blue transform -skew-x-12" />
+                <h2
+                  id={id}
+                  className="text-2xl font-bold text-white uppercase tracking-wider scroll-mt-24"
+                  {...props}
+                >{children}</h2>
+              </div>
+            );
+          },
+          h3: ({ node, children, ...props }) => {
+            const id = findHeadingId(children);
+            return (
+              <div className="flex items-center space-x-3 mt-6 mb-3">
+                <div className="w-1 h-6 bg-p3mid transform -skew-x-12" />
+                <h3
+                  id={id}
+                  className="text-xl font-bold text-white/90 uppercase tracking-wide scroll-mt-24"
+                  {...props}
+                >{children}</h3>
+              </div>
+            );
+          },
           p: ({ node, ...props }) => (
             <p
               className="text-p3white leading-loose mb-4 text-base"
