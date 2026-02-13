@@ -1,6 +1,8 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface MarkdownRendererProps {
   content: string;
@@ -52,21 +54,43 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               {...props}
             />
           ),
-          code: ({ node, inline, ...props }: any) => {
+          code: ({ node, className, children, ...props }: any) => {
+            const match = /language-([\w-]+)/.exec(className || "");
+            if (match) {
+              return (
+                <SyntaxHighlighter
+                  language={match[1]}
+                  style={vscDarkPlus}
+                  customStyle={{
+                    background: "#0D1B2A",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderLeft: "4px solid #51EEFC",
+                    margin: "1.5rem 0",
+                    padding: "1rem",
+                  }}
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, "")}
+                </SyntaxHighlighter>
+              );
+            }
+            if (String(children).includes("\n")) {
+              return (
+                <pre className="bg-p3dark p-4 border-l-4 border-p3cyan border border-white/10 overflow-x-auto my-6 text-sm">
+                  <code className="text-white" {...props}>{children}</code>
+                </pre>
+              );
+            }
             return (
               <code
                 className="bg-p3dark/60 text-p3cyan font-mono px-2 py-1 text-sm"
                 {...props}
-              />
+              >
+                {children}
+              </code>
             );
           },
-          // pre 内嵌的 code 需重置样式（通过 [&_code] 选择器覆盖 inline code 样式）
-          pre: ({ node, ...props }) => (
-            <pre
-              className="bg-p3dark p-4 border-l-4 border-p3cyan border border-white/10 overflow-x-auto my-6 text-sm [&_code]:text-white [&_code]:bg-transparent [&_code]:p-0 [&_code]:border-0"
-              {...props}
-            />
-          ),
+          pre: ({ children }: any) => <>{children}</>,
           table: ({ node, ...props }) => (
             <div className="overflow-x-auto my-6">
               <table

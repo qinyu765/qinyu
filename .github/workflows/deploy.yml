@@ -35,6 +35,11 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          VITE_GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
+          VITE_GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+          VITE_GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
+          VITE_GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

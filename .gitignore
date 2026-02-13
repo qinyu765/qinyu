@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Env files
+.env
+.env.*
+
+# Tooling caches
+.vite
+.eslintcache
+coverage
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -23,5 +32,6 @@ dist-ssr
 *.sln
 *.sw?
 
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+# Local app data
+.obsidian/
+.claude/

@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../constants';
 import { MarkdownRenderer } from '../components/MarkdownRenderer';
+import Giscus from '@giscus/react';
+import { estimateReadingTime } from '../lib/reading-time';
 import { ChevronLeft, ChevronRight, Share2 } from 'lucide-react';
 
 export const BlogPost: React.FC = () => {
@@ -61,6 +63,7 @@ export const BlogPost: React.FC = () => {
          <div className="flex flex-wrap gap-4 text-xs font-mono text-p3cyan mb-4">
             <span className="border border-p3cyan px-2 py-1">{post.date}</span>
             <span className="bg-p3blue text-white px-2 py-1">{post.category}</span>
+            <span className="border border-white/20 text-p3mid px-2 py-1">{estimateReadingTime(post.content)} MIN READ</span>
          </div>
 
          <h1 className="text-4xl md:text-6xl font-display font-black uppercase italic leading-tight mb-8">
@@ -82,6 +85,26 @@ export const BlogPost: React.FC = () => {
 
          <MarkdownRenderer content={post.content} />
       </div>
+
+      {/* 评论区 */}
+      {import.meta.env.VITE_GISCUS_REPO_ID && import.meta.env.VITE_GISCUS_REPO_ID !== 'your-repo-id' && (
+        <div className="mt-12 border border-white/10 p-6">
+          <Giscus
+            key={post.id}
+            repo={import.meta.env.VITE_GISCUS_REPO as `${string}/${string}`}
+            repoId={import.meta.env.VITE_GISCUS_REPO_ID}
+            category={import.meta.env.VITE_GISCUS_CATEGORY}
+            categoryId={import.meta.env.VITE_GISCUS_CATEGORY_ID}
+            mapping="specific"
+            term={post.id}
+            reactionsEnabled="1"
+            emitMetadata="0"
+            inputPosition="top"
+            theme="dark_dimmed"
+            lang="zh-CN"
+          />
+        </div>
+      )}
 
       {/* 底部前后文章导航 */}
       <div className="mt-16 pt-8 border-t border-white/10">
