@@ -7,6 +7,7 @@ export interface PostFrontmatter {
   category: 'TECH' | 'LIFE' | 'MEMO';
   coverImage?: string;
   excerpt: string;
+  tags?: string[];
 }
 
 export interface BlogPost {
@@ -15,8 +16,29 @@ export interface BlogPost {
   date: string;
   category: 'TECH' | 'LIFE' | 'MEMO';
   excerpt: string;
-  content: string; // Markdown/MDX content
+  content: string;
   coverImage?: string;
+  tags?: string[];
+}
+
+export interface TopicMeta {
+  slug: string;
+  title: string;
+  description: string;
+  tags?: string[];
+  coverImage?: string;
+}
+
+export interface TopicPost extends BlogPost {
+  slug: string;
+  topicSlug: string;
+  order?: number;
+}
+
+export interface Topic {
+  meta: TopicMeta;
+  posts: TopicPost[];
+  introContent?: string;
 }
 
 export interface NavItem {
