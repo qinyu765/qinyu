@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义滚动条（Webkit 内核） */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D1B2A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1269CC;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #51EEFC;
+}
+
+body {
+  background-color: #0D1B2A;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* 尊重用户的"减少动画"偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

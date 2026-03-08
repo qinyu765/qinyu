@@ -1,106 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HF</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'%3E%3Cg transform='skewX(-12)' transform-origin='32 32'%3E%3Cpath d='M20 20 L28 20 L32 44 L26 44 Z' fill='%23F0F0F0'/%3E%3Cpath d='M44 20 L36 20 L34 36 L40 36 Z' fill='%231269CC'/%3E%3Ccircle cx='32' cy='50' r='2.5' fill='%231269CC'/%3E%3Cline x1='26' y1='44' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3Cline x1='34' y1='36' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700;900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              p3blue: '#1269CC',
-              p3dark: '#0D1B2A',
-              p3cyan: '#0FB1F5',
-              p3mid: '#6D9AC7',
-              p3white: '#F0F0F0',
-              p3red: '#F40220',
-              p3black: '#070100',
-            },
-            fontFamily: {
-              display: ['Anton', 'Noto Sans SC', 'sans-serif'],
-              body: ['Roboto Condensed', 'Noto Sans SC', 'sans-serif'],
-            },
-            animation: {
-              'float': 'float 6s ease-in-out infinite',
-              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-              'marquee': 'marquee 40s linear infinite',
-              'marquee-reverse': 'marqueeReverse 40s linear infinite',
-            },
-            keyframes: {
-              float: {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-10px)' },
-              },
-              slideInRight: {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(0)' },
-              },
-              marquee: {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-50%)' },
-              },
-              marqueeReverse: {
-                '0%': { transform: 'translateX(-50%)' },
-                '100%': { transform: 'translateX(0)' },
-              }
-            }
-          },
-        },
-      }
-    </script>
-    <style>
-      /* Custom Scrollbar for Webkit */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0D1B2A;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #1269CC;
-        border-radius: 0;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #51EEFC;
-      }
-      body {
-        background-color: #0D1B2A;
-        color: white;
-        overflow-x: hidden;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-          animation-duration: 0.01ms !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
-    "remark-gfm": "https://esm.sh/remark-gfm@^4.0.1",
-    "react-syntax-highlighter/dist/esm/prism": "https://esm.sh/react-syntax-highlighter@^15.6.1/dist/esm/prism?external=react",
-    "react-syntax-highlighter/dist/esm/styles/prism": "https://esm.sh/react-syntax-highlighter@^15.6.1/dist/esm/styles/prism?external=react",
-    "@giscus/react": "https://esm.sh/@giscus/react@^3.1.0?external=react,react-dom",
-    "fuse.js": "https://esm.sh/fuse.js@^7.1.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
+  </head>
   <body>
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
