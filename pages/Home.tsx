@@ -56,8 +56,32 @@ export const Home: React.FC = () => {
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isFavoritesVisible, setIsFavoritesVisible] = useState(false);
   const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
-  // 记录当前鼠标悬浮的图片组，用于翻转层叠顺序
+  
+  // 记录当前鼠标悬浮的图片组，用于展开扇面
   const [hoveredGroup, setHoveredGroup] = useState<string | null>(null);
+  // 记录每个图片组当前在第一层（排头）的图片 index
+  const [headIndexMap, setHeadIndexMap] = useState<Record<string, number>>({});
+  // 记录当前处于"抽出"动画第一阶段的目标图片
+  const [animatingTarget, setAnimatingTarget] = useState<{groupKey: string, imgIdx: number} | null>(null);
+
+  const handleGroupClick = (groupKey: string, count: number) => {
+    // 动画正在进行或只有1张图片时，不响应点击
+    if (count <= 1 || animatingTarget?.groupKey === groupKey) return;
+    
+    // 获取当前排头
+    const currentHead = headIndexMap[groupKey] || 0;
+    // 获取最底层的图片（无论该组由多少图片构成，将序列最后的一张拿出放置首部以进行反向轮替循环）
+    const bottomImgIdx = (currentHead + count - 1) % count;
+
+    // 阶段1：将其向右抽出（暂仍不改变排头，保持原低层 z-index 且外移脱离遮盖）
+    setAnimatingTarget({ groupKey, imgIdx: bottomImgIdx });
+
+    // 阶段2：更新排头由于 React 响应使得 z-index 跳变最高，同时坐标清零自动触发放回过渡动画
+    setTimeout(() => {
+      setHeadIndexMap(prev => ({ ...prev, [groupKey]: bottomImgIdx }));
+      setAnimatingTarget(null);
+    }, 400); 
+  };
 
   useEffect(() => {
     if (location.hash === '#about' || location.hash === '#favorites') {
@@ -375,8 +399,8 @@ export const Home: React.FC = () => {
                 <div className="flex flex-wrap gap-14 pl-2">
                   {categoryData.groups.map((group, idx) => {
                     const groupKey = `${categoryData.category}-${idx}`;
-                    const isActive = hoveredGroup === groupKey;
                     const isMultiple = group.images.length > 1;
+                    const count = group.images.length;
 
                     return (
                     <div 
@@ -385,26 +409,39 @@ export const Home: React.FC = () => {
                       style={{ cursor: isMultiple ? 'pointer' : 'default' }}
                       onMouseEnter={() => isMultiple && setHoveredGroup(groupKey)}
                       onMouseLeave={() => setHoveredGroup(null)}
-                      onClick={() => isMultiple && setHoveredGroup(prev => prev === groupKey ? null : groupKey)}
+                      onClick={() => handleGroupClick(groupKey, count)}
                     >
                       {group.images.map((imgSrc, imgIdx) => {
-                        const lastIdx = group.images.length - 1;
-                        // 激活时反转 z-index：底层图浮到最前面
-                        const effectiveIdx = isActive ? (lastIdx - imgIdx) : imgIdx;
-                        const zIndex = 10 - effectiveIdx;
+                        const currentHead = headIndexMap[groupKey] || 0;
+                        // imgIdx 相对于 currentHead 的层叠深度（0代表最上层）
+                        const posIdx = (imgIdx - currentHead + count) % count;
+                        // 判定是否正在向右抽出 (第一阶段)
+                        const isPoppingOut = animatingTarget?.groupKey === groupKey && animatingTarget.imgIdx === imgIdx;
+                        const isHovered = hoveredGroup === groupKey;
+                        
+                        // 保证最多三张层叠卡可见，如果正在抽拉中强制设为可见
+                        const isVisible = posIdx < 3 || isPoppingOut;
+                        
+                        // posIdx 越低（靠前），层级越高
+                        const zIndex = 10 - posIdx;
+                        
+                        // 依据展示深度计算静态的偏移效果 (永远按照位置 0, 1, 2 展示)
+                        const offsetBase = isMultiple ? posIdx * 10 : 0;
+                        const rotations = ['-2deg', '3deg', '-1deg', '0deg'];
+                        const defaultRotate = isMultiple ? (rotations[posIdx] || '0deg') : '0deg';
 
-                        // 默认层叠的紧凑偏移
-                        const offsetBase = isMultiple ? imgIdx * 10 : 0;
-                        const defaultRotate = isMultiple ? (imgIdx === 0 ? '-2deg' : imgIdx === 1 ? '3deg' : '-1deg') : '0deg';
+                        // 鼠标悬浮时展开的扇形效果
+                        const hoverTranslateX = isMultiple ? posIdx * 80 : 0;
+                        const hoverTranslateY = isMultiple ? posIdx * 20 : 0;
+                        const hoverRotate = isMultiple ? posIdx * 6 : 0;
 
-                        // 激活时：用原始 imgIdx 计算展开方向，底层图向右下方"抽出"
-                        const hoverTranslateX = isMultiple ? imgIdx * 80 : 0;
-                        const hoverTranslateY = isMultiple ? imgIdx * 20 : 0;
-                        const hoverRotate = isMultiple ? imgIdx * 6 : 0;
-
-                        const transform = isActive
-                          ? `translate(${hoverTranslateX}px, ${hoverTranslateY}px) rotate(${hoverRotate}deg)`
-                          : `translate(${offsetBase}px, ${offsetBase}px) rotate(${defaultRotate})`;
+                        // 抽出则做向外的短促滑出，随后再归位
+                        let transform = `translate(${offsetBase}px, ${offsetBase}px) rotate(${defaultRotate})`;
+                        if (isPoppingOut) {
+                          transform = `translate(100px, 40px) rotate(12deg)`; // 明显抽出但不会甩离屏幕，更连贯
+                        } else if (isHovered) {
+                          transform = `translate(${hoverTranslateX}px, ${hoverTranslateY}px) rotate(${hoverRotate}deg)`;
+                        }
 
                         return (
                           <div 
@@ -412,10 +449,12 @@ export const Home: React.FC = () => {
                             className="absolute inset-0 rounded-xl overflow-hidden border-2 border-white/20 shadow-xl bg-p3dark"
                             style={{
                               zIndex,
-                              transition: 'transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s',
+                              opacity: isVisible ? 1 : 0,
+                              pointerEvents: isVisible ? 'auto' : 'none',
+                              transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, box-shadow 0.4s',
                               transform,
-                              boxShadow: isActive
-                                ? '0 0 20px rgba(18,105,204,0.4)'
+                              boxShadow: posIdx === 0 && !isPoppingOut
+                                ? '0 0 15px rgba(18,105,204,0.3)'
                                 : undefined,
                             }}
                           >
