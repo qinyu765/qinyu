@@ -1,6 +1,6 @@
 ---
 title: "Tamagui：跨平台 UI 框架的设计哲学与实践"
-date: "2026.03.07"
+date: "2026.01.17"
 category: "TECH"
 excerpt: "Tamagui 用静态编译器和设计令牌系统，重新定义了跨端 UI 开发的性能上限和开发体验。"
 ---

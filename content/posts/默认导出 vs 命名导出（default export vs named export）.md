@@ -1,6 +1,6 @@
 ---
 title: "默认导出与命名导出：一个看似简单的选择题"
-date: "2026.03.08"
+date: "2025.12.24"
 category: "TECH"
 excerpt: "default export 和 named export 的差别不在语法，而在工程化场景下的可维护性。"
 ---

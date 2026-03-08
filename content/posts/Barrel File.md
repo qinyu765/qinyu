@@ -1,6 +1,6 @@
 ---
 title: "Barrel File：前端工程中的历史包袱"
-date: "2026.03.08"
+date: "2026.02.03"
 category: "TECH"
 excerpt: "桶文件曾是提升开发效率的捷径，如今却成了构建性能的隐形杀手。"
 ---
