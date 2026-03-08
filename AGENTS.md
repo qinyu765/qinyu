@@ -23,6 +23,9 @@ pnpm install     # 安装依赖
 pnpm dev         # 启动开发服务器（端口 3000）
 pnpm build       # 生产构建 → dist/
 pnpm preview     # 本地预览生产构建
+
+# 图片优化：将 public/images/ 下的 JPG 转为 WebP（需先 pnpm install）
+node scripts/optimize-images.mjs
 ```
 
 > 未配置测试框架或 linter。

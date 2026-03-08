@@ -274,7 +274,7 @@ export const Home: React.FC = () => {
           <div className="flex items-center gap-6">
             <div className="bg-gradient-to-b from-p3blue to-p3dark p-1 border-2 border-white transform -skew-x-6 shrink-0 shadow-lg">
               <div className="w-20 h-20 md:w-24 md:h-24 bg-p3dark relative overflow-hidden">
-                <img src="/images/user_admin.jpg" alt="Avatar" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/images/user_admin.webp" alt="Avatar" className="w-full h-full object-cover" loading="lazy" />
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-black italic tracking-wider">STATUS</h1>
@@ -375,7 +375,7 @@ export const Home: React.FC = () => {
                 <div className="flex flex-wrap gap-14 pl-2">
                   {categoryData.groups.map((group, idx) => {
                     const groupKey = `${categoryData.category}-${idx}`;
-                    const isHovered = hoveredGroup === groupKey;
+                    const isActive = hoveredGroup === groupKey;
                     const isMultiple = group.images.length > 1;
 
                     return (
@@ -385,26 +385,36 @@ export const Home: React.FC = () => {
                       style={{ cursor: isMultiple ? 'pointer' : 'default' }}
                       onMouseEnter={() => isMultiple && setHoveredGroup(groupKey)}
                       onMouseLeave={() => setHoveredGroup(null)}
+                      onClick={() => isMultiple && setHoveredGroup(prev => prev === groupKey ? null : groupKey)}
                     >
                       {group.images.map((imgSrc, imgIdx) => {
-                        // hover 时反转层叠顺序：底层图片浮到顶层
-                        const zIndex = isHovered 
-                          ? imgIdx  // 反转：最后一张 z 最高
-                          : (10 - imgIdx);  // 默认：第一张 z 最高
-                        
-                        // 多图片时制造默认的紧凑偏移错位
+                        const lastIdx = group.images.length - 1;
+                        // 激活时反转 z-index：底层图浮到最前面
+                        const effectiveIdx = isActive ? (lastIdx - imgIdx) : imgIdx;
+                        const zIndex = 10 - effectiveIdx;
+
+                        // 默认层叠的紧凑偏移
                         const offsetBase = isMultiple ? imgIdx * 10 : 0;
                         const defaultRotate = isMultiple ? (imgIdx === 0 ? '-2deg' : imgIdx === 1 ? '3deg' : '-1deg') : '0deg';
+
+                        // 激活时：用原始 imgIdx 计算展开方向，底层图向右下方"抽出"
+                        const hoverTranslateX = isMultiple ? imgIdx * 80 : 0;
+                        const hoverTranslateY = isMultiple ? imgIdx * 20 : 0;
+                        const hoverRotate = isMultiple ? imgIdx * 6 : 0;
+
+                        const transform = isActive
+                          ? `translate(${hoverTranslateX}px, ${hoverTranslateY}px) rotate(${hoverRotate}deg)`
+                          : `translate(${offsetBase}px, ${offsetBase}px) rotate(${defaultRotate})`;
 
                         return (
                           <div 
                             key={imgIdx} 
-                            className="absolute inset-0 rounded-xl overflow-hidden border-2 border-white/20 shadow-xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] bg-p3dark"
+                            className="absolute inset-0 rounded-xl overflow-hidden border-2 border-white/20 shadow-xl bg-p3dark"
                             style={{
                               zIndex,
-                              transition: 'z-index 0s, transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s',
-                              transform: `translate(${offsetBase}px, ${offsetBase}px) rotate(${defaultRotate})`,
-                              boxShadow: isHovered && imgIdx === group.images.length - 1
+                              transition: 'transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s',
+                              transform,
+                              boxShadow: isActive
                                 ? '0 0 20px rgba(18,105,204,0.4)'
                                 : undefined,
                             }}
