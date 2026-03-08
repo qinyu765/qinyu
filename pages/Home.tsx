@@ -55,6 +55,7 @@ export const Home: React.FC = () => {
   const favoritesRef = useRef<HTMLElement>(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isFavoritesVisible, setIsFavoritesVisible] = useState(false);
+  const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
 
   useEffect(() => {
     if (location.hash === '#about' || location.hash === '#favorites') {
@@ -161,7 +162,7 @@ export const Home: React.FC = () => {
                     <span className="bg-p3cyan/10 px-2 py-1">{latestPost.date}</span>
                     <span className="border border-p3cyan/30 px-2 py-1 -skew-x-12"><span className="inline-block skew-x-12">{latestPost.category}</span></span>
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-6 text-white group-hover:text-p3cyan transition-colors leading-tight">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-6 text-white transition-colors leading-tight">
                     {latestPost.title}
                   </h2>
                   <p className="text-p3mid font-light text-base md:text-lg leading-relaxed border-l-4 border-p3red pl-4">
@@ -299,13 +300,16 @@ export const Home: React.FC = () => {
                   { name: 'Python', width: '40%', desc: '熟悉其基本语法规则集，曾在日常生活中作为写自动化脚本、简单正则文本批处理和网络数据采集抓取的工具。' },
                   { name: 'Node.js / Nest.js', width: '40%', desc: '能够用以开发服务化的 API 和工具脚手架层，对 Nest 生态的依赖注入与装饰器等抽象服务端设计有着基本了解。曾完成会议室门锁后台管理系统的后端部分' },
                   { name: 'C / C++', width: '60%', desc: '作为我参与算法竞赛的主要语言；系统性地学习了底层开发概念，包括基础指针语法和内存的手动管理边界。' },
-                ].map((skill) => (
+                ].map((skill, skillIndex) => {
+                  const isExpanded = expandedSkill === skillIndex;
+                  return (
                   <div 
                     key={skill.name} 
-                    className="group bg-p3dark/60 rounded-xl p-5 border border-white/5 flex flex-col justify-between cursor-default relative overflow-hidden h-40 shadow-sm"
+                    className="group bg-p3dark/60 rounded-xl p-5 border border-white/5 flex flex-col justify-between cursor-pointer md:cursor-default relative overflow-hidden h-36 sm:h-40 shadow-sm"
+                    onClick={() => setExpandedSkill(isExpanded ? null : skillIndex)}
                   >
-                    {/* 当前层内容 (鼠标移入时淡出，为悬浮卡让位) */}
-                    <div className="relative z-10 flex flex-col justify-between h-full bg-transparent group-hover:opacity-0 transition-opacity duration-300">
+                    {/* 当前层内容 (展开或桌面端悬停时淡出) */}
+                    <div className={`relative z-10 flex flex-col justify-between h-full bg-transparent md:group-hover:opacity-0 transition-opacity duration-300 ${isExpanded ? 'opacity-0' : ''}`}>
                       <div className="flex justify-between items-start">
                         <span className="font-medium tracking-wider text-p3white/90 pr-2">{skill.name}</span>
                         <span className="text-white/30 font-mono font-bold select-none">{'>'}</span>
@@ -319,18 +323,23 @@ export const Home: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* 悬浮介绍卡片 - 覆盖并从右下角顺时针旋转弹出 */}
-                    <div className="absolute inset-0 bg-slate-600/95 backdrop-blur-sm p-5 flex flex-col justify-center rounded-xl z-20 
-                                  opacity-0 translate-y-4 translate-x-4 -rotate-12 scale-95 origin-bottom-right pointer-events-none
+                    {/* 悬浮/展开介绍卡片 */}
+                    <div className={`absolute inset-0 bg-slate-600/95 backdrop-blur-sm p-5 flex flex-col justify-center rounded-xl z-20 
                                   transition-all duration-300 ease-out
-                                  group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:rotate-0 group-hover:scale-100 group-hover:pointer-events-auto">
+                                  ${isExpanded 
+                                    ? 'opacity-100 translate-x-0 translate-y-0 rotate-0 scale-100 pointer-events-auto' 
+                                    : 'opacity-0 translate-y-4 translate-x-4 -rotate-12 scale-95 origin-bottom-right pointer-events-none'
+                                  }
+                                  md:opacity-0 md:translate-y-4 md:translate-x-4 md:-rotate-12 md:scale-95 md:pointer-events-none
+                                  md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:translate-y-0 md:group-hover:rotate-0 md:group-hover:scale-100 md:group-hover:pointer-events-auto`}>
                       <span className="font-bold text-white mb-3 text-base">{skill.name}</span>
                       <p className="text-white/90 text-sm font-light leading-relaxed line-clamp-5">
                         {skill.desc}
                       </p>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -363,7 +372,7 @@ export const Home: React.FC = () => {
                 {/* 类别下的图片卡片组展示区域 */}
                 <div className="flex flex-wrap gap-14 pl-2">
                   {categoryData.groups.map((group, idx) => (
-                    <div key={idx} className="relative group perspective-1000 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 shrink-0">
+                    <div key={idx} className="relative group perspective-1000 w-56 h-56 sm:w-56 sm:h-56 md:w-64 md:h-64 shrink-0">
                       {group.images.map((imgSrc, imgIdx) => {
                         const isMultiple = group.images.length > 1;
                         const zIndex = 10 - imgIdx;

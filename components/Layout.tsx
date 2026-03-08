@@ -43,7 +43,12 @@ export const Layout: React.FC = () => {
       <BackgroundEffect />
 
       {/* 固定顶栏 */}
-      <header className="fixed top-0 left-0 right-0 z-50 py-2 px-8 flex items-center bg-p3black/60 backdrop-blur-lg border-b-2 border-p3blue">
+      <header
+        className="fixed top-0 left-0 right-0 z-50 py-2 pb-8 px-4 md:px-8 flex items-center bg-p3black/40 backdrop-blur-xl backdrop-saturate-150"
+        style={{ maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 100%)' }}
+      >
+        {/* 顶部导航栏底边缘细线 */}
+        {/* <div className="absolute left-0 right-0 bottom-8 h-[1px] bg-white/15 pointer-events-none" /> */}
         {/* 左侧 Logo + 状态指示器 */}
         <div className="hidden md:flex flex-1 min-w-0 items-center space-x-2 text-sm font-mono text-p3cyan tracking-wider">
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
@@ -94,8 +99,15 @@ export const Layout: React.FC = () => {
           </div>
         </nav>
 
+        {/* 移动端 Logo */}
+        <div className="md:hidden flex items-center">
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <img src="/logo.svg" alt="Logo" className="h-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" />
+          </Link>
+        </div>
+
         {/* 移动端汉堡按钮 */}
-        <div className="md:hidden absolute right-6">
+        <div className="md:hidden absolute right-4">
           <HamburgerButton
             isOpen={isMobileMenuOpen}
             onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

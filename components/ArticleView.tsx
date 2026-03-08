@@ -88,7 +88,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
           </div>
         </div>
 
-        <header className="mb-12 relative p-8 md:p-12 border-2 border-white/10 bg-p3dark/50 overflow-hidden">
+        <header className="mb-8 md:mb-12 relative p-5 md:p-12 border-2 border-white/10 bg-p3dark/50 overflow-hidden">
           {/* 背景大字与斜纹 */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMEw4IDhaTTAgOEw4IDBaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')] opacity-10 pointer-events-none" />
           <div className="absolute -right-8 -top-8 text-[8rem] md:text-[12rem] font-display font-black text-white/5 transform -skew-x-12 select-none leading-none pointer-events-none overflow-hidden">
@@ -101,7 +101,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               <span className="bg-p3red text-white px-3 py-1.5 transform -skew-x-12"><span className="inline-block skew-x-12">{post.category}</span></span>
               <span className="border border-white/20 text-p3mid px-3 py-1.5">{estimateReadingTime(post.content)} MIN READ</span>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-black uppercase italic leading-tight text-white drop-shadow-lg">
+            <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-black uppercase italic leading-tight text-white drop-shadow-lg">
               {post.title}
             </h1>
           </div>
@@ -113,7 +113,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
           </div>
         )}
 
-        <div className="bg-p3black p-8 md:p-12 border border-white/5 relative overflow-hidden">
+        <div className="bg-p3black p-4 sm:p-8 md:p-12 border border-white/5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent transform rotate-45 translate-x-8 -translate-y-8" />
           <MarkdownRenderer content={post.content} headings={headings} />
         </div>
@@ -143,19 +143,19 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
           </div>
           <div className="flex justify-between items-stretch gap-4">
             {prevPost ? (
-              <Link to={prevPost.linkTo} className="group flex items-center space-x-3 text-sm text-white/50 hover:text-p3cyan transition-colors">
-                <ChevronLeft size={16} />
-                <div>
+              <Link to={prevPost.linkTo} className="group flex items-center space-x-3 text-sm text-white/50 hover:text-p3cyan transition-colors min-w-0">
+                <ChevronLeft size={16} className="shrink-0" />
+                <div className="min-w-0">
                   <div className="text-xs uppercase tracking-widest mb-1">Prev</div>
-                  <div className="font-bold uppercase">{prevPost.title}</div>
+                  <div className="font-bold uppercase truncate">{prevPost.title}</div>
                 </div>
               </Link>
             ) : <div />}
             {nextPost ? (
-              <Link to={nextPost.linkTo} className="group flex items-center space-x-3 text-sm text-white/50 hover:text-p3cyan transition-colors text-right">
-                <div>
+              <Link to={nextPost.linkTo} className="group flex items-center space-x-3 text-sm text-white/50 hover:text-p3cyan transition-colors text-right min-w-0">
+                <div className="min-w-0">
                   <div className="text-xs uppercase tracking-widest mb-1">Next</div>
-                  <div className="font-bold uppercase">{nextPost.title}</div>
+                  <div className="font-bold uppercase truncate">{nextPost.title}</div>
                 </div>
                 <ChevronRight size={16} />
               </Link>

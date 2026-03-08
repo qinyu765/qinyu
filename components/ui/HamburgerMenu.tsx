@@ -121,7 +121,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
   return (
     <button
       onClick={onToggle}
-      className="relative z-[60] w-12 h-12 flex items-center justify-center pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark"
+      className="relative z-[60] w-10 h-10 flex items-center justify-center pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-p3cyan focus-visible:ring-offset-2 focus-visible:ring-offset-p3dark"
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
       aria-expanded={isOpen}
       aria-controls="mobile-menu"
@@ -130,10 +130,10 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
       <div className="absolute inset-0 transform -skew-x-12 bg-p3white border-2 border-p3blue shadow-[3px_3px_0px_rgba(18,105,204,0.5)]" />
 
       {/* 三横线图标（开/关态通过 transform 变形为 X） */}
-      <div className="relative z-10 transform skew-x-12 p-3">
+      <div className="relative z-10 transform skew-x-12 p-2.5">
         <span
           className={`
-            block w-6 h-0.5 bg-p3dark
+            block w-5 h-0.5 bg-p3dark
             transition-[transform] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? 'rotate-45 translate-y-2' : 'rotate-0 translate-y-0'}
@@ -141,7 +141,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
         />
         <span
           className={`
-            block w-6 h-0.5 bg-p3dark mt-1.5
+            block w-5 h-0.5 bg-p3dark mt-1.5
             transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'}
@@ -149,7 +149,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onTogg
         />
         <span
           className={`
-            block w-6 h-0.5 bg-p3dark mt-1.5
+            block w-5 h-0.5 bg-p3dark mt-1.5
             transition-[transform] duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]
             origin-center
             ${isOpen ? '-rotate-45 -translate-y-2' : 'rotate-0 translate-y-0'}

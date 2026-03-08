@@ -28,16 +28,16 @@ export const SkewButton: React.FC<SkewButtonProps> = ({ to, children, isActive, 
   };
 
   const bgClass = active
-    ? 'bg-white border-p3blue'
+    ? 'bg-p3blue/20 border-p3blue'
     : hoverActive
-      ? 'bg-transparent border-p3blue group-hover:bg-white group-hover:border-p3blue'
-      : 'bg-transparent border-p3blue group-hover:bg-p3blue/20';
+      ? 'bg-transparent border-white/20 group-hover:bg-white group-hover:border-p3blue'
+      : 'bg-transparent border-white/20 group-hover:bg-p3blue/20 group-hover:border-p3blue';
 
   const textClass = active
-    ? 'text-p3dark font-bold'
+    ? 'text-white font-bold'
     : hoverActive
       ? 'text-white group-hover:text-p3dark group-hover:font-bold'
-      : 'text-white group-hover:text-p3cyan';
+      : 'text-white';
 
   return (
     <Link 
