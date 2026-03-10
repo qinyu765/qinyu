@@ -29,7 +29,7 @@ Didact 用 `requestIdleCallback` 来模拟这个调度循环。虽然真正的 R
 
 而 Reconciliation——也就是通常说的 diff 算法——发生在 Render 阶段。它的工作是同时遍历旧的 Fiber 链表和新的 Element 数组，通过比较 `type` 来决定每个节点的命运。类型相同，说明 DOM 节点可以复用，只需要更新 props，标记为 `UPDATE`；类型不同且有新元素，需要创建新的 DOM 节点，标记为 `PLACEMENT`；类型不同且只有旧 Fiber 没有对应的新元素，说明这个节点该被移除，标记为 `DELETION`。每个 Fiber 上的 `effectTag` 就像一个待办标签，Commit 阶段按照这些标签执行对应的 DOM 操作。
 
-这里有一个值得注意的简化：Didact 没有实现 `key`。在真实的 React 中，`key` 是列表 diff 的关键优化——它帮助 React 识别哪些子元素只是换了位置而不是被删除重建。但即便没有 `key`，Didact 的 Reconciliation 逻辑已经足以说明核心思路：通过最小化 DOM 操作来提升性能，而不是每次都推倒重来。
+这里 Didact 做了一个有意的简化：它没有实现 `key`。在真实的 React 中，`key` 是列表 diff 的关键优化——它帮助 React 识别哪些子元素只是换了位置而不是被删除重建。但即便没有 `key`，Didact 的 Reconciliation 逻辑已经足以说明核心思路：通过最小化 DOM 操作来提升性能，而不是每次都推倒重来。
 
 ## 函数组件与 Hooks 的实现
 
@@ -60,10 +60,10 @@ function useState(initial) {
 }
 ```
 
-到这里也就明白了那条铁律——"不要在 if/for 里调用 Hooks"——的真正原因：如果调用顺序变了，索引对不上，React 就会把状态张冠李戴。这不是一条来自 eslint 的武断规则，而是实现机制的必然约束。
+到这里也就明白了那条铁律——"不要在 if/for 里调用 Hooks"——的真正原因：如果调用顺序变了，索引对不上，React 就会把状态张冠李戴。这条规则看起来像 eslint 的武断约定，但它其实是实现机制的必然约束。
 
 ## 从 Didact 看真实 React
 
-Didact 刻意使用了与真实 React 源码相同的变量名和函数名。如果你在浏览器里给一个函数组件打断点，你会在调用栈里看到 `workLoop`、`performUnitOfWork`、`updateFunctionComponent` 这些一模一样的名字。这是这篇文章最精妙的设计——它不是一个脱离现实的教学玩具，而是通向 React 源码的路标。当然，真实 React 在 Didact 的基础上还有大量的优化和功能是这 300 行代码覆盖不到的：用 `key` 优化列表 diff、`useEffect` 和其他 Hooks 的实现、`className`/`style` 等特殊 props 的处理、对 `<Fragment>` 等特殊组件的支持，以及整套优先级调度机制。但 Didact 给出的骨架已经足够清晰——Fiber 树的构建与遍历、两阶段提交、基于 type 的 Reconciliation、基于数组索引的 Hooks——真实 React 的每一个复杂特性都是在这个骨架上长出来的。
+Didact 刻意使用了与真实 React 源码相同的变量名和函数名。如果你在浏览器里给一个函数组件打断点，你会在调用栈里看到 `workLoop`、`performUnitOfWork`、`updateFunctionComponent` 这些一模一样的名字。当然，真实 React 在 Didact 的基础上还有大量的优化和功能是这 300 行代码覆盖不到的：用 `key` 优化列表 diff、`useEffect` 和其他 Hooks 的实现、`className`/`style` 等特殊 props 的处理、对 `<Fragment>` 等特殊组件的支持，以及整套优先级调度机制。但 Didact 给出的骨架已经足够清晰——Fiber 树的构建与遍历、两阶段提交、基于 type 的 Reconciliation、基于数组索引的 Hooks——真实 React 的每一个复杂特性都是在这个骨架上长出来的。
 
-读完这篇文章之后再去看面试题，会有一种"答案就在题目里"的感觉。不是因为你背住了什么，而是因为你理解了那套机制本身。当面试官问"React 的 diff 算法是怎么工作的"，你不需要背诵三条规则，你可以从 Reconciliation 函数的那个 while 循环讲起，讲 `sameType` 的判断，讲 `effectTag` 的标记，讲 Commit 阶段怎么根据这些标记操作 DOM。这种理解的深度，是任何八股文背诵替代不了的。
+读完这篇文章之后再去看面试题，会有一种"答案就在题目里"的感觉。因为你理解了那套机制本身，而不只是背住了什么。当面试官问"React 的 diff 算法是怎么工作的"，你不需要背诵三条规则，你可以从 Reconciliation 函数的那个 while 循环讲起，讲 `sameType` 的判断，讲 `effectTag` 的标记，讲 Commit 阶段怎么根据这些标记操作 DOM。这种理解的深度，是任何八股文背诵替代不了的。

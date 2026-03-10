@@ -25,7 +25,7 @@ CommonJS 是 Node.js 的传统模块系统。`require()` 同步加载，`module.
 
 ESM 和 CJS 混用时，最容易踩的坑集中在三个场景。
 
-第一个是在 ESM 文件中导入 CJS 包。CJS 的导出本质上是一个对象（`module.exports = ...`），在 ESM 中导入时更稳妥的写法是默认导入再解构：`import pkg from 'some-cjs-package'` 然后 `const { foo } = pkg`。直接用 `import { foo } from 'some-cjs-package'` 虽然有时候能工作（依赖 Node 对 CJS 的具名导出推断），但并非所有包都支持，不够可靠。
+第一个是在 ESM 文件中导入 CJS 包。CJS 的导出说到底就是一个对象（`module.exports = ...`），在 ESM 中导入时更稳妥的写法是默认导入再解构：`import pkg from 'some-cjs-package'` 然后 `const { foo } = pkg`。直接用 `import { foo } from 'some-cjs-package'` 虽然有时候能工作（依赖 Node 对 CJS 的具名导出推断），但并非所有包都支持，不够可靠。
 
 第二个是在 CJS 文件中引用 ESM 包。`require('esm-package')` 通常会直接报错，因为 ESM 的加载模型是异步的。CJS 中要加载 ESM 包，只能走动态 `import()`：`const mod = await import('esm-package')`，但这意味着你必须在异步上下文中使用。
 
