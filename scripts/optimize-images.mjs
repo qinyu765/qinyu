@@ -6,7 +6,7 @@
  * 用法: node scripts/optimize-images.mjs
  */
 import sharp from 'sharp';
-import { readdir, stat, mkdir } from 'fs/promises';
+import { readdir, stat, mkdir, unlink } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -55,28 +55,54 @@ async function processFile(inputPath, outputPath, options) {
 async function main() {
   console.log('🖼️  开始图片优化...\n');
 
+  const jpgToDelete = [];
+
   // 1. 处理 Favorites 目录
   const favDir = path.join(PUBLIC_IMAGES, 'Favorites');
   const favFiles = await readdir(favDir);
-  
+
   for (const file of favFiles) {
     if (!/\.(jpg|jpeg)$/i.test(file)) continue;
     const inputPath = path.join(favDir, file);
     const outputName = file.replace(/\.(jpg|jpeg)$/i, '.webp');
     const outputPath = path.join(favDir, outputName);
-    await processFile(inputPath, outputPath, CONFIG.Favorites);
+
+    // 检查同名 WebP 是否已存在，已存在则跳过转换
+    try {
+      await stat(outputPath);
+      console.log(`⏭️  ${file} → WebP 已存在，跳过转换`);
+    } catch {
+      await processFile(inputPath, outputPath, CONFIG.Favorites);
+    }
+    jpgToDelete.push(inputPath);
   }
 
   // 2. 处理头像
   const avatarInput = path.join(PUBLIC_IMAGES, 'user_admin.jpg');
   const avatarOutput = path.join(PUBLIC_IMAGES, 'user_admin.webp');
   try {
-    await processFile(avatarInput, avatarOutput, CONFIG.avatar);
-  } catch (e) {
-    console.log(`⚠️  跳过头像: ${e.message}`);
+    await stat(avatarInput);
+    try {
+      await stat(avatarOutput);
+      console.log(`⏭️  user_admin.jpg → WebP 已存在，跳过转换`);
+    } catch {
+      await processFile(avatarInput, avatarOutput, CONFIG.avatar);
+    }
+    jpgToDelete.push(avatarInput);
+  } catch {
+    // 头像 JPG 不存在，无需处理
   }
 
-  console.log('\n🎉 图片优化完成！');
+  // 3. 删除原始 JPG/JPEG 文件
+  if (jpgToDelete.length > 0) {
+    console.log(`\n🗑️  清理原始 JPG（共 ${jpgToDelete.length} 个）...`);
+    for (const f of jpgToDelete) {
+      await unlink(f);
+      console.log(`   ✕ ${path.basename(f)}`);
+    }
+  }
+
+  console.log('\n🎉 图片优化完成！所有原始 JPG 已删除。');
 }
 
 main().catch(console.error);

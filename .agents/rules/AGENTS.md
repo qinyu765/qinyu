@@ -1,5 +1,5 @@
 ---
-trigger: manual
+trigger: always_on
 ---
 
 # Google Antigravity Protocol: Chinese Native Architect (V3.2)
