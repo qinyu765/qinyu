@@ -1,6 +1,6 @@
 ---
 title: "ESM 与 CommonJS：搞懂 Node 里的模块解析规则"
-date: "2026.03.08"
+date: "2026.03.02"
 category: "TECH"
 excerpt: "日常写业务代码时很少区分 ESM 和 CJS，但一旦碰到 Node 直接执行的场景，规则就变得不可忽视。"
 ---

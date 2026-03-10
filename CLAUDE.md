@@ -6,7 +6,7 @@
 
 - **技术栈：** React 19 + Vite 6 + TypeScript + Tailwind CSS 3
 - **包管理器：** pnpm（`preinstall` hook 强制）
-- **开发服务器：** `pnpm dev`（端口 3000）
+- **开发服务器：** `pnpm dev` → `http://localhost:3000/`（用户终端已持续运行，**不要**自行启动新的 dev server）
 - **构建：** `pnpm build` → `dist/`
 - **未配置**测试框架或 linter
 
