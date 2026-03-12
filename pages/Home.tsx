@@ -335,6 +335,7 @@ export const Home: React.FC = () => {
                     key={skill.name} 
                     className="group bg-p3dark/60 rounded-xl p-5 border border-white/5 flex flex-col justify-between cursor-pointer md:cursor-default relative overflow-hidden h-36 sm:h-40 shadow-sm"
                     onClick={() => setExpandedSkill(isExpanded ? null : skillIndex)}
+                    onMouseLeave={() => expandedSkill === skillIndex && setExpandedSkill(null)}
                   >
                     {/* 当前层内容 (展开或桌面端悬停时淡出) */}
                     <div className={`relative z-10 flex flex-col justify-between h-full bg-transparent md:group-hover:opacity-0 transition-opacity duration-300 ${isExpanded ? 'opacity-0' : ''}`}>
