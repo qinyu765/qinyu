@@ -108,7 +108,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
         </header>
 
         {headings.length > 0 && (
-          <div className="2xl:hidden">
+          <div className="xl:hidden">
             <TableOfContents headings={headings} activeId={activeId} onItemClick={scrollToHeading} collapsible />
           </div>
         )}
@@ -165,7 +165,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
       </article>
 
       {headings.length > 0 && (
-        <aside className="hidden 2xl:block fixed top-24 left-8 w-64">
+        <aside className="hidden xl:block fixed top-24 left-8 w-64">
           <TableOfContents headings={headings} activeId={activeId} onItemClick={scrollToHeading} />
         </aside>
       )}
