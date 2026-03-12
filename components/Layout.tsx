@@ -44,7 +44,7 @@ export const Layout: React.FC = () => {
 
       {/* 固定顶栏 */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 py-2 pb-8 px-4 md:px-8 flex items-center bg-p3black/40 backdrop-blur-xl backdrop-saturate-150"
+        className="fixed top-0 left-0 right-0 z-50 py-2 pb-8 px-4 md:px-8 flex items-center bg-p3black/60 backdrop-blur-md backdrop-saturate-150"
         style={{ maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 100%)' }}
       >
         {/* 顶部导航栏底边缘细线 */}

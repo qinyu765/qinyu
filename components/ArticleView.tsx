@@ -31,7 +31,8 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
 
   useEffect(() => {
     if (!headings.length) { setActiveId(''); return; }
-    const handleScroll = () => {
+    let rafId = 0;
+    const computeActive = () => {
       if (isScrollingLocked.current) return;
       let current = '';
       for (const h of headings) {
@@ -40,9 +41,19 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
       }
       if (current) setActiveId(current);
     };
-    handleScroll();
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        computeActive();
+        rafId = 0;
+      });
+    };
+    computeActive();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [headings, post.id]);
 
   const scrollToHeading = useCallback((headingId: string) => {

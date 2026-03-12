@@ -48,8 +48,8 @@ const styles = `
     height: 200%;
     top: -50%;
     left: -50%;
-    will-change: transform;
-    animation: p3r-noise-shift 0.3s steps(3) infinite;
+    contain: strict;
+    animation: p3r-noise-shift 4s steps(4) infinite;
   }
 
   @keyframes p3r-noise-shift {
@@ -61,7 +61,6 @@ const styles = `
 
   .p3r-moon {
     animation: p3r-moon-drift 12s ease-in-out infinite;
-    will-change: transform;
   }
 
   @keyframes p3r-moon-drift {
