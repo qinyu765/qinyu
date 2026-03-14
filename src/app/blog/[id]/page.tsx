@@ -14,8 +14,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   const posts = loadBlogPosts();
-  const post = posts.find((p) => p.id === id);
+  const post = posts.find((p) => p.id === decodedId);
 
   if (!post) return { title: 'Post Not Found' };
 
@@ -33,8 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   const posts = loadBlogPosts();
-  const postIndex = posts.findIndex((p) => p.id === id);
+  const postIndex = posts.findIndex((p) => p.id === decodedId);
 
   if (postIndex === -1) notFound();
 

@@ -21,7 +21,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { topicSlug, postSlug } = await params;
+  const { topicSlug: rawTopicSlug, postSlug: rawPostSlug } = await params;
+  const topicSlug = decodeURIComponent(rawTopicSlug);
+  const postSlug = decodeURIComponent(rawPostSlug);
   const topics = loadTopics();
   const topic = topics.find((t) => t.meta.slug === topicSlug);
   const post = topic?.posts.find((p) => p.slug === postSlug);
@@ -40,7 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TopicPostPage({ params }: Props) {
-  const { topicSlug, postSlug } = await params;
+  const { topicSlug: rawTopicSlug, postSlug: rawPostSlug } = await params;
+  const topicSlug = decodeURIComponent(rawTopicSlug);
+  const postSlug = decodeURIComponent(rawPostSlug);
   const topics = loadTopics();
   const topic = topics.find((t) => t.meta.slug === topicSlug);
 
