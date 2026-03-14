@@ -1,0 +1,49 @@
+import type { Metadata } from 'next';
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: {
+    default: "HF's Blog",
+    template: "%s | HF's Blog",
+  },
+  description: 'HF 的技术博客 — 前端开发、React、TypeScript 技术分享与实践记录',
+  keywords: ['前端开发', 'React', 'TypeScript', '技术博客', 'JavaScript'],
+  openGraph: {
+    title: "HF's Blog",
+    description: '前端技术分享与实践记录',
+    type: 'website',
+    url: 'https://hflin.xyz',
+    locale: 'zh_CN',
+  },
+  twitter: {
+    card: 'summary',
+  },
+  metadataBase: new URL('https://hflin.xyz'),
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="zh-CN">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@400;700;900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'%3E%3Cg transform='skewX(-12)' transform-origin='32 32'%3E%3Cpath d='M20 20 L28 20 L32 44 L26 44 Z' fill='%23F0F0F0'/%3E%3Cpath d='M44 20 L36 20 L34 36 L40 36 Z' fill='%231269CC'/%3E%3Ccircle cx='32' cy='50' r='2.5' fill='%231269CC'/%3E%3Cline x1='26' y1='44' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3Cline x1='34' y1='36' x2='32' y2='50' stroke='%231269CC' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E"
+        />
+      </head>
+      <body className="font-body text-white selection:bg-p3cyan selection:text-black">
+        {children}
+      </body>
+    </html>
+  );
+}

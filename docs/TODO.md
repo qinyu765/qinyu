@@ -27,12 +27,11 @@
   - `MarkdownRenderer.tsx` 的 `code` 渲染使用 `any`，补齐 `react-markdown` components 的类型约束
   - 抽出重复的排版样式（标题/列表/引用块等）为小组件或常量，降低维护成本
 
-- [ ] **Frontmatter 校验与日期规范化**
-  - `lib/blog-loader.ts`：对必填字段做 schema 校验（可用 zod），并支持 `draft: true`（构建时过滤）
-  - 将 `date` 解析为标准格式（ISO / Date），避免仅靠字符串排序导致的隐性问题
+- [x] **Frontmatter 解析升级**
+  - 已从简易正则解析器迁移至 `gray-matter`，支持完整 YAML frontmatter
+  - 待办：schema 校验（zod）和 `draft: true` 过滤
 
-- [x] **同步项目文档与实际实现**
-  - `AGENTS.md` 中路由/Router 描述与 `App.tsx` 的 `BrowserRouter` 保持一致
+- [x] **同步项目文档与实际实现** — 已在 Next.js 迁移后更新 `AGENTS.md`
 
 ---
 
@@ -46,9 +45,7 @@
   - 部分文件 CRLF（`tailwind.config.js`、`index.css`）
   - 添加 `.editorconfig`
 
-- [x] **改善 SEO 标签** ✅
-  - ~~已实现 `useSEO` hook 动态设置每页 title / description~~
-  - ~~已切换 `BrowserRouter`、添加 `robots.txt` / `sitemap.xml`~~
+- [x] **改善 SEO 标签** — 已迁移至 Next.js `metadata` API（每页静态 + 动态 generateMetadata）
 
 - [ ] **检查 `tsconfig.json` 严格模式**
   - 确保 `strict: true`、`noUncheckedIndexedAccess`
@@ -81,8 +78,7 @@
 - [x] **跑马灯 GPU 合成提示** ✅
   - ~~两行跑马灯添加 `will-change-transform`~~
 
-- [ ] **页面路由级代码分割**
-  - `App.tsx` 对 `pages/*` 做 `React.lazy` + `Suspense`，减小首屏 JS 体积
+- [x] **页面路由级代码分割** — Next.js App Router 自动代码分割
 
 - [ ] **Giscus 评论按需加载**
   - 默认折叠（按钮触发）或滚动到可视区再加载，减少第三方脚本开销
@@ -94,9 +90,7 @@
   - 当前全量加载 Prism 语言定义
   - 改为仅注册 `tsx`、`js`、`css`、`bash` 等常用语言
 
-- [ ] **文章正文按需加载（延后）**
-  - 当前 `constants.ts` 同步加载全部 Markdown 内容
-  - 文章少时影响不大，增长后需拆分
+- [x] **文章正文按需加载** — Next.js SSG 每页独立构建，无需手动分割
 
 - [ ] **动效支持 `prefers-reduced-motion`**
   - 对跑马灯/背景等高频动画提供降级，兼顾可访问性与低端设备

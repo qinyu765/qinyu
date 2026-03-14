@@ -11,8 +11,8 @@ lerna-debug.log*
 node_modules
 
 # Build output
-dist
-dist-ssr
+.next
+out
 *.local
 .vercel
 
@@ -29,7 +29,6 @@ dist-ssr
 /metadata.json
 
 # Tooling caches
-.vite
 .eslintcache
 coverage
 

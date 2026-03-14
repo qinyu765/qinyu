@@ -36,10 +36,10 @@ jobs:
       - name: Build
         run: pnpm build
         env:
-          VITE_GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
-          VITE_GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
-          VITE_GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
-          VITE_GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
+          NEXT_PUBLIC_GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
+          NEXT_PUBLIC_GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+          NEXT_PUBLIC_GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -47,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./out
 
       - name: Deploy to GitHub Pages
         id: deployment

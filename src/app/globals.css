@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* ── P3R 主题 Token（TW4 @theme 语法） ── */
+@theme {
+  --color-p3blue: #1269CC;
+  --color-p3dark: #0D1B2A;
+  --color-p3cyan: #0FB1F5;
+  --color-p3mid: #6D9AC7;
+  --color-p3white: #F0F0F0;
+  --color-p3red: #F40220;
+  --color-p3black: #070100;
+
+  --font-display: 'Anton', 'Noto Sans SC', sans-serif;
+  --font-body: 'Roboto Condensed', 'Noto Sans SC', sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-slide-in-right: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marqueeReverse 40s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes slideInRight {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marqueeReverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* P3R 风格斜纹背景纹理（跨组件复用） */
+@utility bg-p3r-crosshatch {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMEw4IDhaTTAgOEw4IDBaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==');
+}
+
+/* 自定义滚动条（Webkit 内核） */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D1B2A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1269CC;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #51EEFC;
+}
+
+body {
+  background-color: #0D1B2A;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Markdown 内容区域溢出控制 */
+.markdown-content {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+/* 尊重用户的"减少动画"偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
