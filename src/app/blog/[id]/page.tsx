@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { loadBlogPosts } from '@/lib/blog-loader';
+import { articleJsonLd, breadcrumbJsonLd } from '@/lib/structured-data';
 import { BlogPostClient } from './BlogPostClient';
 
 interface Props {
@@ -44,11 +45,30 @@ export default async function BlogPostPage({ params }: Props) {
   const prev = postIndex > 0 ? posts[postIndex - 1] : undefined;
   const next = postIndex < posts.length - 1 ? posts[postIndex + 1] : undefined;
 
+  const jsonLd = [
+    articleJsonLd(post),
+    breadcrumbJsonLd([
+      { name: '首页', url: '/' },
+      { name: '博客', url: '/blog' },
+      { name: post.title, url: `/blog/${post.id}` },
+    ]),
+  ];
+
   return (
-    <BlogPostClient
-      post={post}
-      prevPost={prev ? { id: prev.id, title: prev.title, linkTo: `/blog/${prev.id}` } : undefined}
-      nextPost={next ? { id: next.id, title: next.title, linkTo: `/blog/${next.id}` } : undefined}
-    />
+    <>
+      {jsonLd.map((ld, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        />
+      ))}
+      <BlogPostClient
+        post={post}
+        prevPost={prev ? { id: prev.id, title: prev.title, linkTo: `/blog/${prev.id}` } : undefined}
+        nextPost={next ? { id: next.id, title: next.title, linkTo: `/blog/${next.id}` } : undefined}
+      />
+    </>
   );
 }
+

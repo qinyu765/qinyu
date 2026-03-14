@@ -4,7 +4,7 @@ import { BlogListClient } from './BlogListClient';
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: '所有文章列表 — 前端技术分享与实践',
+  description: '所有文章列表 — 计算机科学技术分享与实践',
 };
 
 export default function BlogPage() {

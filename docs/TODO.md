@@ -39,19 +39,19 @@
 
 > 参考 [cellstack-analysis.md](./cellstack-analysis.md) §4.1 和 [Conversation Analysis.md](./Conversation%20Analysis.md) §P1
 
-- [ ] **JSON-LD 结构化数据**
+- [x] **JSON-LD 结构化数据** ✅
   - 添加 `src/lib/structured-data.ts`，输出 WebSite / Person / BreadcrumbList / ArticleJsonLd
-  - 参考 CellStack `structured-data.ts` 实现
+  - 已注入到 `layout.tsx`（全局）和 `blog/[id]/page.tsx`（文章页）
 
-- [ ] **`app/robots.ts` — 动态生成 robots.txt**
+- [x] **`app/robots.ts` — 动态生成 robots.txt** ✅
   - 使用 Next.js App Router 的 `MetadataRoute.Robots` API
 
-- [ ] **`app/sitemap.ts` — 动态生成 sitemap.xml**
+- [x] **`app/sitemap.ts` — 动态生成 sitemap.xml** ✅
   - 遍历所有 posts + topics 路由，替代旧的 `scripts/generate-sitemap.mjs`
 
-- [ ] **RSS / Atom Feed 生成**
-  - 构建时生成 `feed.xml`（RSS 2.0）和/或 `feed.json`（JSON Feed）
-  - 参考 CellStack `scripts/build-feed.mjs`
+- [x] **RSS / Atom Feed 生成** ✅
+  - `scripts/build-feed.mjs` 构建时生成 `out/feed.xml`（RSS 2.0）
+  - `package.json` postbuild 脚本自动触发
 
 ---
 
