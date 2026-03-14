@@ -11,14 +11,14 @@
 | 框架         | Next.js **16** (App Router, `output: 'export'` SSG) | Next.js (App Router, SSG)               |
 | 渲染模式     | SSG（静态站点生成）                              | SSG（静态站点生成）                       |
 | 路由         | 文件系统路由                                     | 文件系统路由                              |
-| 样式         | Tailwind CSS **4** + shadcn/ui + CSS Variables（像素风） | Tailwind CSS 3（P3R 风）            |
+| 样式         | Tailwind CSS **4** + shadcn/ui + CSS Variables（像素风） | Tailwind CSS **4**（P3R 风）             |
 | 内容解析     | `gray-matter`（完整 YAML）                       | `gray-matter`（完整 YAML）                |
 | Markdown 渲染 | `streamdown`（流式渲染）                        | `react-markdown` + `react-syntax-highlighter` |
 | 部署         | GitHub Pages + GitHub Actions                    | 同                                        |
 | 评论         | Giscus (GitHub Discussions)                      | Giscus ✅                                 |
 | 搜索         | Pagefind（构建时全文索引）                       | Fuse.js（内存模糊搜索）                  |
 | 代码高亮     | `@streamdown/code` 组件                          | `react-syntax-highlighter` ✅             |
-| SEO          | `seo.ts` + `structured-data.ts` + `robots.ts` + `sitemap.ts` | `useSEO` hook |
+| SEO          | `seo.ts` + `structured-data.ts` + `robots.ts` + `sitemap.ts` | Next.js `metadata` API + `generateMetadata` |
 | RSS          | `build-feed.mjs`（RSS/Atom/JSON Feed）           | 无                                        |
 | 动画         | GSAP + Framer Motion + Three.js                  | CSS + 原生 JS                             |
 | 代码格式化   | Prettier + ESLint                                | 无                                        |
@@ -228,7 +228,7 @@ content/
 | **第四阶段** | Pagefind 全文搜索（替代 Fuse.js）     | 中     | 中                       |           |
 | **第四阶段** | Prettier + ESLint                     | 小     | 中                       |           |
 | **远期**     | 动画升级（GSAP / Framer Motion）       | 大     | 中（体验提升）           |           |
-| **远期**     | Tailwind CSS 4 + shadcn/ui            | 中     | 中（开发效率）           |           |
+| **远期**     | Tailwind CSS 4 + shadcn/ui            | 中     | 中（开发效率）           | ✅ TW4 已完成 |
 
 ---
 

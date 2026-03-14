@@ -20,14 +20,14 @@
 
 | 对比项 | 你的博客 (p3r-inspired-blog) | 对方博客 (cellstack) |
 |--------|---------------------------|---------------------|
-| **框架** | Vite + React (SPA) | Next.js 16 (SSG, `output: 'export'`) |
-| **渲染模式** | CSR（客户端渲染） | SSG（静态站点生成） |
+| **框架** | Next.js 15 (App Router, SSG) | Next.js 16 (SSG, `output: 'export'`) |
+| **渲染模式** | SSG（静态站点生成） | SSG（静态站点生成） |
 | **搜索** | Fuse.js（内存模糊搜索） | Pagefind（构建时全文索引） |
-| **SEO** | `useSEO` hook 动态注入 title/meta | `seo.ts` + `structured-data.ts`（JSON-LD） + `robots.ts` + `sitemap.ts` |
+| **SEO** | Next.js `metadata` API + `generateMetadata` | `seo.ts` + `structured-data.ts`（JSON-LD） + `robots.ts` + `sitemap.ts` |
 | **RSS** | 无 | `build-feed.mjs`（RSS/Atom/JSON Feed） |
 | **动画** | CSS + 原生 JS | GSAP + Framer Motion + Three.js |
 | **代码格式化** | 无 | Prettier + ESLint |
-| **样式** | Tailwind CSS 3 | Tailwind CSS 4 + shadcn/ui |
+| **样式** | Tailwind CSS 4 | Tailwind CSS 4 + shadcn/ui |
 | **Markdown** | react-markdown | streamdown（流式渲染） |
 
 ---
@@ -41,10 +41,9 @@
 > [!IMPORTANT]
 > 对方最核心的建议是：**博客类站点应该用 SSG，不要用纯 SPA。**
 
-- [ ] **评估是否迁移到 Next.js / Astro 等 SSG 框架**
+- [x] **已迁移到 Next.js 15 (App Router, SSG)** ✅
   - 优势：SEO 友好、首屏秒开（纯 HTML）、搜索引擎可索引
-  - 劣势：迁移成本高、需要重写路由和数据加载逻辑
-  - **折中方案：先用 Vite SSG 插件**（如 `vite-ssg`），在不换框架的前提下生成静态页面
+  - 迁移已完成，无需再考虑架构切换
 
 ### 🟡 P1 — SEO 补全（对话明确提到）
 
