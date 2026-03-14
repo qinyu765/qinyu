@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { useMemo, isValidElement, ReactElement } from "react";
+import ReactMarkdown, { ExtraProps } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -15,7 +15,7 @@ function getTextContent(node: React.ReactNode): string {
   if (typeof node === 'number') return String(node);
   if (!node) return '';
   if (Array.isArray(node)) return node.map(getTextContent).join('');
-  if (typeof node === 'object' && 'props' in node) return getTextContent((node as any).props.children);
+  if (isValidElement(node)) return getTextContent((node as ReactElement).props.children);
   return '';
 }
 
@@ -121,7 +121,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               </a>
             );
           },
-          code: ({ node, className, children, ...props }: any) => {
+          code: ({ className, children, ...props }: React.ComponentPropsWithoutRef<'code'> & ExtraProps) => {
             const match = /language-([\w-]+)/.exec(className || "");
             if (match) {
               return (
@@ -157,7 +157,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               </code>
             );
           },
-          pre: ({ children }: any) => <>{children}</>,
+          pre: ({ children }: React.ComponentPropsWithoutRef<'pre'> & ExtraProps) => <>{children}</>,
           table: ({ node, ...props }) => (
             <div className="overflow-x-auto my-6">
               <table

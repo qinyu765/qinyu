@@ -29,7 +29,7 @@ export const TopicList: React.FC = () => (
             className="group block border-l-4 border-white hover:border-p3cyan bg-white/5 hover:bg-white/[0.08] transition-all duration-300 relative overflow-hidden"
           >
             {/* 整个卡片作为海报 */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMEw4IDhaTTAgOEw4IDBaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')] opacity-10" />
+            <div className="absolute inset-0 bg-p3r-crosshatch opacity-10" />
             <div className="absolute -bottom-4 -right-4 text-7xl font-display font-black text-white/5 transform -skew-x-12 select-none uppercase pointer-events-none">
               TOPIC
             </div>

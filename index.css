@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* P3R 风格斜纹背景纹理（跨组件复用） */
+@layer utilities {
+  .bg-p3r-crosshatch {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMEw4IDhaTTAgOEw4IDBaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==');
+  }
+}
+
 /* 自定义滚动条（Webkit 内核） */
 ::-webkit-scrollbar {
   width: 8px;

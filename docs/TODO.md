@@ -6,12 +6,12 @@
 
 ## P1 — 代码质量
 
-- [ ] **拆分 `Home.tsx`（480+ 行巨型组件）**
+- [x] **拆分 `Home.tsx`（480+ 行巨型组件）**
   - 拆为 `HeroSection`、`RecentLogs`、`AboutSection`、`FavoritesSection`
   - 技能数据（skills 数组）抽取到 `constants.ts`
   - Favorites 图片解析逻辑抽取到 `lib/` 工具函数
 
-- [ ] **提取跑马灯卡片组件**
+- [x] **提取跑马灯卡片组件**
   - Row1 / Row2 卡片结构几乎完全相同
   - 提取为 `MarqueePostCard` 组件
 
@@ -19,11 +19,11 @@
   - `Home.tsx` 中多处大段注释代码
   - `Layout.tsx` 中被注释的底边缘细线
 
-- [ ] **统一 SVG 背景纹理**
+- [x] **统一 SVG 背景纹理**
   - `Home.tsx`、`ArticleView.tsx`、`TopicDetail.tsx`、`TopicList.tsx` 中重复的 Base64 SVG
   - 定义为全局 Tailwind utility class（如 `bg-p3r-crosshatch`）
 
-- [ ] **完善 Markdown 渲染类型与复用**
+- [x] **完善 Markdown 渲染类型与复用**
   - `MarkdownRenderer.tsx` 的 `code` 渲染使用 `any`，补齐 `react-markdown` components 的类型约束
   - 抽出重复的排版样式（标题/列表/引用块等）为小组件或常量，降低维护成本
 
@@ -31,7 +31,7 @@
   - `lib/blog-loader.ts`：对必填字段做 schema 校验（可用 zod），并支持 `draft: true`（构建时过滤）
   - 将 `date` 解析为标准格式（ISO / Date），避免仅靠字符串排序导致的隐性问题
 
-- [ ] **同步项目文档与实际实现**
+- [x] **同步项目文档与实际实现**
   - `AGENTS.md` 中路由/Router 描述与 `App.tsx` 的 `BrowserRouter` 保持一致
 
 ---
@@ -56,9 +56,6 @@
 - [ ] **补充 `typecheck` 脚本并接入 CI**
   - `package.json` 添加 `typecheck: tsc --noEmit`
   - GitHub Actions 对 PR / main 做 `pnpm typecheck` + `pnpm build`
-
-- [ ] **补充 `.env.example` + 本地/部署说明**
-  - 说明 `VITE_GISCUS_*`、`SITE_URL` 等变量来源与默认值，避免新环境踩坑
 
 - [ ] **扩展 sitemap / feed 生成**
   - `scripts/generate-sitemap.mjs` 增加 Topics 路由（`/topics`、`/topics/:topicSlug`、`/topics/:topicSlug/:postSlug`）

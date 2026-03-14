@@ -39,7 +39,7 @@ node scripts/optimize-images.mjs
 ├── index.html            # HTML 入口（Google Fonts 加载）
 ├── index.tsx             # React 挂载点
 ├── index.css             # 全局基础样式
-├── App.tsx               # 路由定义（HashRouter）
+├── App.tsx               # 路由定义（BrowserRouter）
 ├── types.ts              # 全局类型定义
 ├── constants.ts          # 博客文章、专题、导航项导出
 ├── vite.config.ts        # Vite 配置（@/ 路径别名 → 根目录）
@@ -53,6 +53,12 @@ node scripts/optimize-images.mjs
 │   ├── MarkdownRenderer.tsx  # P3R 风格的 Markdown 渲染器
 │   ├── P3RDialogUI.tsx   # P3R 对话框风格 UI 组件
 │   ├── ScrollToTop.tsx   # 路由切换时自动滚动到顶部
+│   ├── home/             # 首页子组件
+│   │   ├── HeroSection.tsx       # Hero 区块
+│   │   ├── RecentLogs.tsx        # 跑马灯文章列表
+│   │   ├── MarqueePostCard.tsx   # 跑马灯单卡片
+│   │   ├── AboutSection.tsx      # 关于/技能区块
+│   │   └── FavoritesSection.tsx  # 收藏夹区块
 │   └── ui/               # 原子级 UI 组件
 │       ├── BackgroundEffect.tsx   # 固定背景（月亮 + 水波纹动画）
 │       ├── HamburgerMenu.tsx      # 移动端汉堡菜单
@@ -70,8 +76,11 @@ node scripts/optimize-images.mjs
 │
 ├── lib/                  # 工具库
 │   ├── blog-loader.ts    # 博客/专题内容加载器（import.meta.glob）
+│   ├── favorites.ts      # Favorites 图片扫描与分类
 │   ├── reading-time.ts   # 阅读时间估算
-│   └── toc.ts            # 目录标题提取
+│   ├── skills.ts         # 技能数据常量
+│   ├── toc.ts            # 目录标题提取
+│   └── use-seo.ts        # SEO hook（动态 title/description）
 │
 ├── content/              # 文章内容（Markdown）
 │   ├── posts/            # 独立博客文章（9 篇）
@@ -100,7 +109,7 @@ node scripts/optimize-images.mjs
 
 ## 路由系统
 
-使用 `HashRouter`（兼容 GitHub Pages 静态部署），路由定义在 `App.tsx`：
+使用 `BrowserRouter`，路由定义在 `App.tsx`：
 
 | 路径 | 页面 |
 |------|------|
