@@ -2,7 +2,7 @@
 title: "数据格式转换的时机"
 date: "2026.03.24"
 category: "TECH"
-excerpt: "从一次格式讨论出发，聊聊数据在系统内部该用什么形态流转"
+excerpt: "从一次格式思考出发，聊聊数据在系统内部该用什么形态流转"
 ---
 
 最近在写新项目 cclin（Agent cli） 的 ReAct 循环，
