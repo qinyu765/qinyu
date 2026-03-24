@@ -133,7 +133,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                   customStyle: {
                     background: "#0D1B2A",
                     border: "1px solid rgba(255,255,255,0.1)",
-                    borderLeft: "4px solid #51EEFC",
+                    borderLeft: "4px solid #0FB1F5",
                     margin: "1.5rem 0",
                     padding: "1rem",
                   },
