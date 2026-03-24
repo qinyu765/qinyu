@@ -5,7 +5,8 @@ category: "TECH"
 excerpt: "从一次格式讨论出发，聊聊数据在系统内部该用什么形态流转"
 ---
 
-在 cclin 的 `react-loop.ts` 里，有两套格式表示同一个东西——"LLM 请求调用的工具"。一种是内部流转用的 `{ id, name, input }`，字段平铺，`input` 保持对象形态；另一种是 OpenAI 协议要求的 `AssistantToolCall`，多嵌套了一层 `function`，而且 `arguments` 是 JSON 字符串。当时有人提了个直觉性的问题：既然最终写入 history 都要用 OpenAI 格式，为什么不在提取的时候就直接转过去？
+最近在写新项目 cclin（Agent cli） 的 ReAct 循环，
+其中的 `react-loop.ts` 里，有两套格式表示同一个东西——"LLM 请求调用的工具"。一种是内部流转用的 `{ id, name, input }`，字段平铺，`input` 保持对象形态；另一种是 OpenAI 协议要求的 `AssistantToolCall`，多嵌套了一层 `function`，而且 `arguments` 是 JSON 字符串。当时有人提了个直觉性的问题：既然最终写入 history 都要用 OpenAI 格式，为什么不在提取的时候就直接转过去？
 
 这个问题初看是代码风格层面的——多一个函数少一个函数，似乎无所谓。但它背后藏着一个在几乎所有系统里都会反复出现的架构问题：数据在系统内部各层之间，到底应该以什么形态流转？这个选择决定了模块间的耦合程度、需求变化时的修改范围，以及新功能扩展的难度。
 
