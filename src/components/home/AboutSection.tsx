@@ -36,13 +36,20 @@ export const AboutSection: React.FC = () => {
           <h1 className="text-4xl md:text-5xl font-display font-black italic tracking-wider">STATUS</h1>
         </div>
 
+        {/* Intro */}
+        <div className="mt-8 mb-12 max-w-4xl">
+          <div className="relative pl-5 py-3 border-l-[3px] border-p3cyan bg-gradient-to-r from-p3cyan/10 to-transparent">
+            <p className="text-white/80 text-sm md:text-base leading-loose tracking-wider font-light">
+              打过算法，玩过 TTS 声音克隆，用过很多 AI Agent <span className="text-white/50 text-xs md:text-sm">（Claude Code / Gemini CLI / Codex / Antigravity 等）</span>，<br className="hidden md:block"/>
+              始终保持对前沿新技术的好奇心与探索欲。
+            </p>
+          </div>
+        </div>
+
         {/* Skill Matrix */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-p3cyan/5 to-transparent opacity-0 transition-opacity duration-500 pointer-events-none" />
           <div className="relative z-10">
-            <p className="text-p3mid text-sm md:text-base leading-relaxed tracking-wide mb-4">
-              打过算法，玩过 TTS 声音克隆，用过很多 Agent（Claude Code、Gemini CLI、Codex、Antigravity 等），会尝试学习和了解新技术
-            </p>
             <h2 className="text-xl font-bold uppercase text-p3cyan mb-6 mt-3 flex items-center">
               <span className="w-2 h-2 bg-white mr-3 shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
               Skills
