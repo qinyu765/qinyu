@@ -30,7 +30,7 @@ export const SKILLS: SkillItem[] = [
   {
     name: 'Node.js / Nest.js',
     width: '40%',
-    desc: '能够用以开发服务化的 API 和工具脚手架层，对 Nest 生态的依赖注入与装饰器等抽象服务端设计有着基本了解。曾完成会议室门锁后台管理系统的后端部分',
+    desc: '对 Nest 生态的依赖注入与装饰器等抽象服务端设计有着基本了解。曾参与会议室智能管理系统的后端部分',
   },
   {
     name: 'C / C++',
