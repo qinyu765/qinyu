@@ -1,6 +1,6 @@
 ---
 title: "到底有多少种 “CLAUDE.md”？"
-date: "2026.04.22"
+date: "2026.03.27"
 category: "TECH"
 excerpt: "从 CLAUDE.md 到 AGENTS.md，梳理各主流编码 Agent 的配置文件体系"
 ---
